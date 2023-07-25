@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>회원가입 인증</title>
+    <style>
+        body {
+            background-color: rgba(62, 78, 219, 0.787);
+            color: white;
+        }
+    
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+    
+        .box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .name {
+            display: block;
+        }
+    
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            text-align: center;
+            padding: 8px;
+            border: 2px solid white;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+    
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3e4edb;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #2c3ea7;
+        }
+    
+        #check {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    
+        /* Center the sign-up button */
+        .next {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function check_pw() {
+
+            var pw = document.getElementById('pw').value;
+            var SC = ["!", "@", "#", "$", "%"];
+            var check_SC = 0;
+
+            if (pw.length < 6 || pw.length > 16) {
+                window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+                document.getElementById('pw').value = '';
+            }
+            for (var i = 0; i < SC.length; i++) {
+                if (pw.indexOf(SC[i]) != -1) {
+                    check_SC = 1;
+                }
+            }
+            if (check_SC == 0) {
+                window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+                document.getElementById('pw').value = '';
+            }
+            if (document.getElementById('pw').value != '' && document.getElementById('pw2').value != '') {
+                if (document.getElementById('pw').value == document.getElementById('pw2').value) {
+                    document.getElementById('check').innerHTML = '비밀번호가 일치합니다.'
+                    document.getElementById('check').style.color = 'blue';
+                }
+                else {
+                    document.getElementById('check').innerHTML = '비밀번호가 일치하지 않습니다.';
+                    document.getElementById('check').style.color = 'red';
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <hr>
+            <div class="box">
+            <b class="name">USER_NAME</b>
+            <input class="text" type="text" name="USER_NAME" id="name">
+
+        <br><br>
+
+            <b class="name">Email</b>
+            <input class="text" type="email" name="email" id="email">
+            <button class="sendcode" type="button">Send Code</button>
+            <br>
+            <input type="checkbox" checked disabled> **email 수신 동의(코드 받기위해 필수)
+
+        <br><br>
+
+            <b class="name">Email Code</b>
+            <input class="text" type="email" name="emailauth" >
+            <button class="checkcode" type="button">Check Code</button>
+
+        <br><br>
+
+            <b class="name">NICKNAME</b>
+            <input class="text" type="text" name="USER_NICKNAME" id="nickname">
+
+        <br><br>
+
+            <b class="name">ID</b>
+            <input class="text" type="text" name="id">
+
+        <br><br>
+
+            <b class="name">PASSWORD</b>
+            <input class="text" type="password" id="pw"onchange="check_pw()">
+
+        <br><br>
+
+            <b class="name">PASSWORD Confirm</b>
+            <input class="text" type="password" id="pw2" onchange="check_pw()">
+        &nbsp;<span id="check"></span>
+        </div>
+  
+        <hr>
+        <div>
+            <button class="next" type="button" onclick="location.href='index2.html'">Sign Up</button>
+        </div>
+        </div>
+        <script src="routes/main.js"></script>
+</body>
+
+</html>

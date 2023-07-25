@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>회원가입</title>
+    <style>
+        body {
+            background-color: rgba(62, 78, 219, 0.787);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .box {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .name {
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            text-align: center;
+            display: inline-block;
+            padding: 5px;
+            /*input박스 주위로 공간 (tap정도로) 만들기*/
+        }
+
+        button {
+            display: inline-block;
+            /*input박스와 버튼이 한줄에 위치하도록*/
+            margin: 0 10px;
+            padding: 5px 10px;
+            /*input박스 주위에 공간 만들기*/
+        }
+    </style>
+    <script>
+        function check_pw() {
+
+            var pw = document.getElementById('pw').value;
+            var SC = ["!", "@", "#", "$", "%"];
+            var check_SC = 0;
+
+            if (pw.length < 6 || pw.length > 16) {
+                window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+                document.getElementById('pw').value = '';
+            }
+            for (var i = 0; i < SC.length; i++) {
+                if (pw.indexOf(SC[i]) != -1) {
+                    check_SC = 1;
+                }
+            }
+            if (check_SC == 0) {
+                window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+                document.getElementById('pw').value = '';
+            }
+            if (document.getElementById('pw').value != '' && document.getElementById('pw2').value != '') {
+                if (document.getElementById('pw').value == document.getElementById('pw2').value) {
+                    document.getElementById('check').innerHTML = '비밀번호가 일치합니다.'
+                    document.getElementById('check').style.color = 'blue';
+                }
+                else {
+                    document.getElementById('check').innerHTML = '비밀번호가 일치하지 않습니다.';
+                    document.getElementById('check').style.color = 'red';
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sign up</h1>
+        <hr>
+        <div class="box">
+            <b class="name">USER_NAME</b>
+            <input class="text" type="text" name="USER_NAME" placeholder="사용자 이름">
+        </div>
+        <br><br>
+        <div class="box">
+            <b class="name">Email(ID)</b>
+            <input class="text" type="email" name="email" placeholder="E-mail">
+            <br>
+            <input type="checkbox" checked disabled> **email 수신 동의(필수)
+        </div>
+        <br><br>
+        <div class="box">
+            <b class="name">PASSWORD</b>
+            <input class="text" type="password" id="pw" placeholder="PASSWORD" onchange="check_pw()">
+        </div>
+        <br><br>
+        <div class="box">
+            <b class="name">PASSWORD Confirm</b>
+            <input class="text" type="password" id="pw2" placeholder="PASSWORD Confirm" onchange="check_pw()">
+            &nbsp;<span id="check"></span>
+        </div>
+        <br>
+        <hr><br>
+        <div>
+            <button class="next" type="button" onclick="location.href='index2.html'">Sign Up</button>
+        </div>
+    </div>
+</body>
+
+</html>

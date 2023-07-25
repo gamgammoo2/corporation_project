@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>회원가입 인증</title>
+  <style>
+    body {
+      background-color: rgba(62, 78, 219, 0.787);
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .box {
+      display: inline-block;
+      text-align: center;
+    }
+
+    .name {
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"]{
+      text-align: center;
+      display: inline-block;
+      padding: 5px; /*input박스 주위로 공간 (tap정도로) 만들기*/
+    }
+
+    button {
+      display: inline-block; /*input박스와 버튼이 한줄에 위치하도록*/
+      margin: 0 10px;
+      padding: 5px 10px; /*input박스 주위에 공간 만들기*/
+    }
+  </style>
+  <script>
+
+    function checkfield() {
+      if (document.getElementById('name').value == "") {
+        alert("이름을 입력하세요");
+        document.getElementById('name').focus();
+        exit;
+
+      }
+
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Sign Up Auth</h1>
+    <hr>
+    <div class="box">
+      <b class="name">USER_NAME</b>
+      <input class="text" type="text" name="USER_NAME" id="name" placeholder="사용자 이름">
+    </div>
+    <br><br>
+    <div class="box">
+      <b class="name">Email</b>
+      <input class="text" type="email" name="email" id="email" placeholder="E-mail">
+      <button class="sendcode" type="button">Send Code</button>
+      <br>
+      <input type="checkbox"> **email 수신 동의(코드 받기위해 필수)
+    </div>
+    <br><br>
+    <div class="box">
+      <b class="name">Email Code</b>
+      <input class="text" type="email" name="emailauth" placeholder="E-mail Auth">
+      <button class="checkcode" type="button">Check Code</button>
+    </div>
+    <br><hr><br>
+    <div>
+      <button class="next" type="button" onclick="location.href='index2.html'">Next Sign Up Page</button>
+    </div>
+  </div>
+</body>
+
+</html>

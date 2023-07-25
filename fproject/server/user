@@ -1,0 +1,7 @@
+use etho
+
+db.etho.insert({no:1,name:"gam",email:"gam123@abcd.com"})
+db.etho.insert({no:2,name:"chae",email:"chae123@abcd.com"})
+db.etho.insert({no:3,name:"moo",email:"moo123@abcd.com"})
+
+db.etho.find()
