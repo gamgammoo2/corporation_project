@@ -13,10 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// mongoose configuration
-const mongoose = require("mongoose")
-mongoose.connect("mongodb://http://")
-
 var main = require('./routes/main.js');
 app.use('/', main);
 
