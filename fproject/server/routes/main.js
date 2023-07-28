@@ -1,34 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require("mongoose")
+
 const mysql = require('sync-mysql');
-const env = require('dotenv').config({ path: "../../../.env" });
-const axios = require('axios');
-const internal = require('stream');
-const { Double } = require('bson');
-const { stringify } = require('querystring');
+const env = require('dotenv').config({ path: "../../.env" });
 
 var connection = new mysql({
     host: process.env.host,
     user: process.env.user,
+    port: process.env.port,
     password: process.env.password,
     database: process.env.database
 });
-
-// ------------mongodb
-// schema 정의
-var preuser_schema = mongoose.Schema({
-    no:Double,
-    name:string,
-    email:String
-}, {
-    versionKey: false
-})
-
-// 몽고디비의 콜렉션과 스키마로 모델 생성
-var authusers=mongoose.model('etho',preuser_schema);
-
-// ------------mongodb
 
 const app = express();
 
@@ -41,55 +23,127 @@ app.get('/hello', (req, res) => {
     res.send('hello world!');
 })
 
-// 이름,이메일 넣고 sendemail 보냈을 때 mongodb(pre)와 매칭되는지
-app.post('/matchauth', (req, res) => {
-    var { USER_NAME, email } = req.body;
-    var preuser = new authusers({'no':no,'name':prename,'email':preemail})
-    const apiUrl = `http://192.168.1.187:3000/combined_frame3/${name}/${email}`;
+// 이름,이메일 넣고 보냈을 때 preuser와 매칭되는지(둘 다 매칭되야함) 비교 후 realuser에 넣기 or holduser에 넣기
+app.post('/match', (req, res) => {
+    const {name,email,id,password,stgroup} = req.body;
+    const result = connection.query("select * from preuser where name=? and email=?",[name,email])
+    // 입력칸에서 빈 공백이 존재하는지 확인. ===로 더 정확히 확인.
+    if (name==="" || email==="" || id==="" || password==="" || stgroup==="") {
+        res.send("Please Complete Blank(s)")
+    }
 
-    axios
-        .get(apiUrl)
-        .then(response => {
-            const data = response.data;
-            res.send(data);
+    // 닉네임이 이미 등록되어있는지 확인
+    connection.query("select * from realuser where id=?",[id],(nickcheckerror,nickcheck) => {
+        if (nickcheckerror) {
+            console.error("Error for checking nickname:", nickcheckerror);
+            return res.status(500).send("Error for checking nickname");
+        }
+
+        if (nickcheck.length > 0) {
+            return res.send("This nickname is already registered!");
+        }
+
+        // 이메일이 이미 존재하는지 확인.
+        connection.query("select * from realuser where email=?",[email],(emailcheckerror,emailcheck) => {
+            if (emailcheckerror) {
+                console.error("error for checking email:", emailcheckerror);
+            }
+            if (emailcheck.length > 0) {
+                return res.send("This email is already registered!")
+            }
+
+            // DB에 data 넣기.
+            connection.query("insert into realuser (name, email, id,password,stgroup) values (?,?,?,?,?)",[name,email,id,password,stgroup], (inserterror,result)=>{
+                if (inserterror) {
+                    console.error("error in inserting row:", inserterror);
+                    return res.status(500).send("error in inserting row into the database.");
+                }
+                console.log("Name:",name,"Email:",email + " => Now Registered!");
+                return res.send("registrered successfully!!")
+            })
         })
-        .catch(error => {
-            console.error('Error:', error);
-            res.status(500).send('Internal Server Error');
-        });
+    })
+
+
+
+
+
+
+
+
+
+
+    //     if (result.length == 0) {
+    //         connection.query("select realuser.*, holduser.* from (realuser,holduser) where realuser.id=? or holduser.id=?",[id,id])
+    //         if (result.length == 0) {
+    //             res.send("Nickname already registered")
+    //         } else {
+    //             connection.query("select realuser.*,holduser.* from (realuser,holduser) where realuser.email=? or holduser.email=?", [email,email])
+    //             if (result.length == 0) {
+    //                 res.send("Email already registered")
+    //             } else {
+    //                 connection.query("insert into holduser (name,email,id,password,stgroup) values (?,?,?,?,?)", [name, email, id, password, stgroup], (error, result) => {
+    //                     if (error) {
+    //                         console.error("Error inserting row:", error);
+    //                         return res.status(500).send("Error inserting row into the database.");
+    //                     }
+    //                 })
+    //                 console.log("Name :",name,",Email :",email+" => Holding")
+    //             }
+    //         }
+    //     }
+    //  else {
+    //         if (result.length == 0) {
+    //             connection.query("select realuser.*, holduser.* from (realuser,holduser) where realuser.id=? or holduser.id=?", [id, id])
+    //             if (result.length == 0) {
+    //                 res.send("Nickname already registered")
+    //             } else {
+    //                 connection.query("select realuser.*,holduser.* from (realuser,holduser) where realuser.email=? or holduser.email=?", [email, email])
+    //                 if (result.length == 0) {
+    //                     res.send("Email already registered")
+    //                 } else {
+    //                     connection.query("insert into realuser (name,email,id,password,stgroup) values (?,?,?,?,?)", [name, email, id, password, stgroup], (error, result) => {
+    //                         if (error) {
+    //                             console.error("Error inserting row:", error);
+    //                             return res.status(500).send("Error inserting row into the database.");
+    //                         }
+    //                         console.log("Row inserted successfully:", result);
+    //                     })
+    //                     console.log("Name :", name, ",Email :", email + " => Now Registered!")
+    //                 }
+    //             }
+    //         }
+    //     }
+    });
+
+
+// preuser에 name과 email을 넣기
+app.post("/insert", (req, res) => {
+    const {name,email} = req.body;
+    const result = connection.query("INSERT INTO preuser (name,email) VALUES (?,?)", [name,email], (error, result) => {
+        if (error) {
+            console.error("Error inserting row:", error);
+            return res.status(500).send("Error inserting row into the database.");
+        }
+        console.log("Row inserted successfully:", result);
+        // res.redirect('/match');
+    });
 });
 
-// 산불 결과 txt
-app.get('/month_firemongo', (req, res) => {
-    const { year1, year2 } = req.query;
-    const apiUrl = `http://192.168.1.187:3001/result_fire?year1=${year1}&year2=${year2}`;
 
-    axios
-        .get(apiUrl)
-        .then(response => {
-            const data = response.data;
-            res.json(data);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-        });
-});
+// app.post("/insert", (req, res) => {
+//     const {num, email, id, password,staging} = req.body
+//     const query = "INSERT INTO preuser VALUES (?,?,?,?,?)"; // 수정된 SQL 쿼리
 
-// 미세먼지 결과 txt
-app.get('/month_ufmongo', (req, res) => {
-    const { year1, year2 } = req.query;
-    const apiUrl = `http://192.168.1.187:3000/result_uf?year1=${year1}&year2=${year2}`;
+//     connection.query(query, [email, id, password,staging], (err, result) => {
+//         if (err) {
+//             console.error("Error executing query:", err);
+//             return res.status(500).send("An error occurred while inserting data.");
+//         }
 
-    axios
-        .get(apiUrl)
-        .then(response => {
-            const data = response.data;
-            res.json(data);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-        });
-});
+//         console.log("Data inserted successfully!");
+//         res.redirect('/match');
+//     });
+// });
+
 module.exports = app;
