@@ -5,3 +5,4 @@ CDDC2023-Admin-main
 CDDC2023-User-main
 
 **/node_modules
+**/secret.json
