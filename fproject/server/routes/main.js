@@ -4,12 +4,6 @@ const mysql = require('mysql2/promise');
 // const mysql = require('sync-mysql');
 const env = require('dotenv').config({ path: "../../.env" });
 
-
-// nodemail
-const nodemailer=require('nodemailer');
-const senderInfo = require('../secret.json');
-//nodemaile
-
 const connection = mysql.createPool({
     host: process.env.host,
     user: process.env.user,
@@ -25,44 +19,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
-//nodemailer
-// 메일발송 객체
-let mailSender = {
-    // 메일발송 함수
-    sendGmail(param) {
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',   // 메일 보내는 곳
-            port: 587,
-            host: 'smtp.gmlail.com',
-            secure: false,
-            requireTLS: true,
-            auth: {
-                user: senderInfo.user,  // 보내는 메일의 주소
-                pass: senderInfo.pass   // 보내는 메일의 비밀번호
-            }
-        });
-
-        // 메일 옵션
-        let mailOptions = {
-            from: senderInfo.user, // 보내는 메일의 주소
-            to: param.toEmail, // 수신할 이메일
-            subject: param.subject, // 메일 제목
-            text: param.text // 메일 내용
-        };
-
-        // 메일 발송    
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-
-    }
+function token() {
+    result = Math.random().toString(36).substring(2, 11);
 }
-//nodemailer
 
+
+
+app.post('/nickcheck', async (req,res) => {
+    const nick = req.body;
+    const [nickcheckresult] = await connection.query("select * from user where nick=? UNION select * from realuser where nick=?",[nick, nick]);
+    if (nickcheckresult.length > 0) {
+        return res.send("<script>alert('This nickname is already registered!'); history.go(-1);</script>");
+    } else {
+        return res.send("<script>alert('You can use this Nickname!!');</script>")
+    }
+})
 
 
 app.get('/hello', (req, res) => {
@@ -116,37 +87,17 @@ app.post('/signup', async (req, res) => {
             return res.send("<script>alert('This email is already registered!'); history.go(-1);</script>");
         }
 
-        //이메일 보내는 작업 위해 mailer 엔드포인트로 post요청 axios 모듈 사용해서 요청 (두개의 엔드포인트(signup, mailer)가 동시 실행이 아니라, 하나의 엔드포인트에서 다른 엔드포인트를 호출하고, 이후 결과를 얻어서 응답을 보낼 수 있게 됌.
-        const axios = require('axios');
-        const mailerEnd = 'https://43.200.210.69:8000/mailer'
-        //try-catch 문은 비동기 작업에서 예외 처리를 효과적으로 처리하는데 도움.
+        //realuser db에 data 집어넣깅
         try {
-            await axios.post(mailerEnd, {email});
+            await connection.query("INSERT INTO realuser (name, email, nick, password, stgroup) VALUES (?, ?, ?, ?, ?)", [name, email, nick, password, stgroup]);
+            console.log("Name:", name, "Email:", email + " => Now Registered!");
+            return res.send("<script>alert('Sign UP Completed!'); location.href='/index2.html';</script>");
         } catch (error) {
-            console.error("Error for sending email:", error);
-            return res.send("<script>alert('Error processing the request.'); history.go(-1);</script>");
+            console.error("Error:", error);
+            return res.send("<script>alert('Error processing the request.'); history.go(-1);;</script>");
         }
-        
-        //signup 핸들러 함수에서 응답 보내기
-        return res.send("<script>alert('Sign UP Completed!'); location.href='/index2.html';</script>");
-    });
-
-
-
-
-
-//일단 주석
-//         //realuser db에 data 집어넣깅
-//         try {
-//             await connection.query("INSERT INTO realuser (name, email, nick, password, stgroup) VALUES (?, ?, ?, ?, ?)", [name, email, nick, password, stgroup]);
-//             console.log("Name:", name, "Email:", email + " => Now Registered!");
-//             return res.send("<script>alert('Sign UP Completed!'); location.href='/index2.html';</script>");
-//         } catch (error) {
-//             console.error("Error:", error);
-//             return res.send("<script>alert('Error processing the request.'); history.go(-1);;</script>");
-//         }
-//     }
-// });
+    }
+});
 
 
 
