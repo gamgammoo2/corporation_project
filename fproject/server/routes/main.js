@@ -24,15 +24,51 @@ function token() {
 }
 
 
+app.post('/sendtoken', async (req,res) => {
+    const requestBody = req.body;
+    const email = requestBody.email;
+    
+})
+
 
 app.post('/nickcheck', async (req,res) => {
-    const nick = req.body;
-    const [nickcheckresult] = await connection.query("select * from user where nick=? UNION select * from realuser where nick=?",[nick, nick]);
-    if (nickcheckresult.length > 0) {
-        return res.send("<script>alert('This nickname is already registered!'); history.go(-1);</script>");
-    } else {
-        return res.send("<script>alert('You can use this Nickname!!');</script>")
+    const requestBody = req.body;
+    const nick=requestBody.nick;
+    console.log(nick)
+
+    // var nick = document.getElementById('nick').value;
+    var nickLenghth = 0;
+
+    //모든 글자 마다 1로 바꾸기
+    for (var i = 0; i < nick.length; i++) {
+        var nickch = nick.charAt(i);
+        if (nickch.length < 5) {
+            nickLenghth += 1;
+        }
     }
+
+    //닉네임 필수 입력
+    if (nick == null || nick=="") {
+        return res.send("<script>alert('Please Fill Nickname Box'); history.back();</script>");
+        //공백 안됨
+    } else if (nick.search(/[\s]/g) > 0) {
+        return res.send("<script>alert('Please Check blank(s) in Nickname'); history.back();</script>");
+        //닉네임은 영문 및 숫자 및 _ 포함 최소 5자 최대 12자
+    } else if (nickLenghth < 5 || nickLenghth > 12) {
+        return res.send("<script>alert('Nickname is must be between 5 and 12 characters in length'); history.back(-1);</script>")
+        //닉네임 특수문자 안됨
+    } else if (nick.search(/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/g) > 0) {
+        return res.send("<script>alert('Nickname can NOT have special character.'); history.back();</script>")
+    } else {
+        const [nickcheckresult] = await connection.query("select nick from tryuser where nick=? UNION select nick from realuser where nick=?", [nick, nick]);
+        if (nickcheckresult.length > 0) {
+            return res.send("<script>alert('This nickname is already registered!'); history.go(0);</script>");
+        } else {
+            return res.send("<script>alert('You can use this Nickname!!'); history.go(-1);</script>");
+            
+        }
+    }
+
 })
 
 
@@ -40,13 +76,27 @@ app.get('/hello', (req, res) => {
     res.send('hello world!');
 })
 
+// function validateForm() {
+//     const email = document.getElementById('email').value;
+//     const token = document.getElementById('token').value;
+//     const nick = document.getElementById('nick').value;
+//     const password = document.getElementById('password').value;
+//     console.log(email, nick, password)
+
+//     if (email == "" || token == "" || nick == "" || password == "") {
+//         alert('Please Complete Blank(s)');
+//         return false;
+//     }
+//     return true;
+// }
+
 // 이름,이메일 넣고 보냈을 때 preuser와 매칭되는지(둘 다 매칭되야함) 비교 후 realuser에 넣기 or holduser에 넣기
 app.post('/signup', async (req, res) => {
-    const { name, email, nick, password, stgroup } = req.body;
+    const { email, token, nick, password, stgroup } = req.body;
     // 입력칸에서 빈 공백이 존재하는지 확인. -> HTML페이지에서 확인하는걸로 바꿈.
-    // if (name == "" || email == "" || nick == "" || password == "" || stgroup == "") {
-    //     return res.send("<script>alert('Please Complete Blank(s)'); location.href='history.back()';</script>")
-    // }
+    if (email == "" ||token == ""|| nick == "" || password == "" || stgroup == "") {
+        return res.send("<script>alert('Please Complete Blank(s)'); history.back();</script>")
+    }
 
     //preuser db에 이미 등록된 email인지 확인(사전 등록 확인)
     const [preuserresult] = await connection.query("select * from preuser where email=?", [email])
@@ -117,8 +167,8 @@ app.post('/signup', async (req, res) => {
 
 // preuser에 name과 email을 넣기
 app.post("/insertpre", async (req, res) => {
-    const { name, email } = req.body;
-    const result = await connection.query("INSERT INTO preuser (name,email) VALUES (?,?)", [name, email]);
+    const { name, email, team } = req.body;
+    const result = await connection.query("INSERT INTO preuser (name,email) VALUES (?,?,?)", [name, email,team]);
     if (result.length >0) {
         return res.send('Inserted in preuser database: '+ email);
     } else {

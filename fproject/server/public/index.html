@@ -24,55 +24,6 @@
                 document.getElementById('pw').value = '';
             }
         }
-
-        function check_nick() {
-            var nick = document.getElementById('nick').value;
-            var nickLenghth=0;
-
-            var engCheck = /[a-zA-Z]/gi;
-            var numCheck = /[0-9]/
-            var specialCheck = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/g;
-
-            //모든 글자 마다 1로 바꾸기
-            for (var i=0; i<nick.length; i++) {
-                nickch = nick.charAt(i);
-                if(escape(nickch).length<5) {
-                    nickLenghth += 1;
-                }
-            }
-
-            //닉네임 필수 입력
-            if (nick == null || nick =="") {
-                alert("Please Fill Nickname Box");
-            //공백 안됨
-            } else if (nick.search(/[\t\r\n\v\f]/) != -1) {
-                alert("Please Check blank in Nickname");
-            //닉네임은 영문 및 숫자 및 _ 포함 최소 5자 최대 12자
-            } else if (nickLenghth<5 || nickLenghth >12) {
-                alert("Nickname is must be between 5 and 12 characters in length")
-            //닉네임 특수문자 안됨
-            } else if (specialCheck.test(nick)) {
-                alert("Nickname can't have special character.")
-            } else {
-               href="/nickcheck"
-            // db와 대조, 중복 alert
-            
-            }
-        }
-
-        function validateForm() {
-            const email = document.getElementById('email').value;
-            const token = document.getElementById('token').value;
-            const nick = document.getElementById('nick').value;
-            const password = document.getElementById('password').value;
-            console.log(email, nick, password)
-
-            if (email == "" || token == "" || nick == "" || password == "") {
-                alert('Please Complete Blank(s)');
-                return false;
-            }
-            return true;
-        }
         
     </script>
 </head>
@@ -81,12 +32,12 @@
     <div class="container">
         <h1>Sign Up</h1>
         <hr>
-        <form action="/signup" name="signupform" method="post" onsubmit="return validateForm();">
+        <form>
             
             <div class="box"></div>
                 <b class="name">Email</b>
                 <input class="text" type="email" id="email" name="email"> &nbsp;
-                <button type="button" name="tokensend">Send Verification Code</button>
+                <button type="submit" formaction="/sendtoken" formmethod="post" name="tokensend">Send Verification Code</button>
                 <br>
                 <input type="checkbox" checked disabled> **Agree to receive email (necessary)
 
@@ -97,15 +48,13 @@
                 <button type="button" name="checktoken" onclick="check_token()">Verify</button>
             
                 <br><br>
-
                 <b class="name">NICKNAME</b>
-                <input class="text" type="text" id="nick" name="nick">
-                <button type="button" name="checknick" onclick="check_nick()">Verify</button>
+                <input class="text" type="text" id="nick" name="nick">&nbsp;
+                <button type="submit" formaction="/nickcheck" formmethod="post" id="checknick" name="checknick"">Verify</button>
                 <br> 
                 **Nickname only have a-z/A-Z(**Case-insensitive), 0-9, _(underbar). 
                 <br>
                 **Nickname must be between 5 and 12 characters in length
-
             <br><br>
 
                 <b class="name">PASSWORD</b>
@@ -129,10 +78,11 @@
     
             <hr>
             <div>
-                <button class="next" type="submit">SIGN UP</button>
+                <button class="next" type="submit" formaction="/signup" formmethod="post">SIGN UP</button>
             </div>
             </div>
         </form>
+        <script src="../routes/main.js"></script>
 </body>
 
 </html>
