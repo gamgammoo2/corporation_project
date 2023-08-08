@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <script src="./main.js"></script>
+    <script>
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                document.location.reload();
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <span style="line-height:50%"><h1>Sign Up</h1></span>
+        <span style="line-height:50%"><h3>Enter email address for verification.</h3></span>
+
+            <form action="/postemail" method="post" name="postemail" onsubmit=""submitForm(event)>
+            <b class="text">Email</b>
+            <br>
+            <input class="text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+            <span style="line-height:50%"><br></span>
+            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+            <div id="emailerror" style="color: red;"></div>
+            <div>
+                <button class="text" type="submit" id="checkemail" onclick="checkEmail()" disabled>Verify</button>
+            </div>
+            </form>
+            
+            <div class="container" id="inputDiv" style="display:none">
+            
+            <br>
+            <input class="text" type="email" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token">&nbsp;
+            <span id="timer" style="color:red;"></span> 
+            <!-- timer -->
+            <span style="line-height:50%"><br></span>
+            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+            <div id="emailerror" style="color: red;"></div>
+            <div>
+                <button class="text" type="submit" id="tokenresend">Resend</button>
+                <button class="text" type="submit" onclick="checktoken()" id="tokenconfirm">Confirm</button>
+            </div>
+            </div>
+
+            <hr>
+            <!-- <div>
+                <button class="text" type="button" onclick="toggle()">SIGN UP</button>
+            </div> -->
+     </div>
+</body>
+
+</html>
