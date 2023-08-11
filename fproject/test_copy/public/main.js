@@ -48,7 +48,58 @@ async function toggle() {
 
 }
 
-function checkEmail() {
+// function checkEmail() {
+//     const emailInput = document.getElementById('email');
+//     const emailError = document.getElementById('emailerror');
+//     const exptext = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+//     if (!exptext.test(emailInput.value.trim())) {
+//         emailError.innerHTML = "Incorrect email address format";
+//         return false;
+//     } else {
+//         emailError.innerHTML = "";
+//         return true;
+//     }
+// }
+
+// //verify 버튼 onclick
+// function submitForm(event) {
+//     event.preventDefault(); //form이 제출되기 전에 막아두기
+
+//     if (checkEmail()) {
+//         const emailInput = document.getElementById('email');
+//         const email = emailInput.value.trim();
+
+//         const xhr = new XMLHttpRequest();
+//         xhr.open('POST', '/postemail', true);
+//         xhr.setRequestHeader('Content-Type', 'application/json');
+
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState === XMLHttpRequest.DONE) {
+//                 if (xhr.status === 200) {
+//                     const data = JSON.parse(xhr.responseText);
+//                     console.log(data);
+//                     toggle();
+//                     countdown();
+//                 } else if (xhr.status === 409) {
+//                     const errorResponse = JSON.parse(xhr.responseText);
+//                     const errorMessage = errorResponse.error;
+//                     alert(errorMessage);
+//                 } else {
+//                     console.error('Request failed with status:', xhr.status);
+//                 }
+//             }
+//         };
+
+//         const requestData = JSON.stringify({ email: email });
+//         xhr.send(requestData);
+//     }
+// }
+
+//verify 뿐만아니라 confirm 버튼도 마찬가지로 preventdefault를 추가하기위해서 각각이 눌러졌을 때, submitForm함수가 각각에 맞추어 실행되도록 만듬
+
+// Verify 버튼 클릭 시
+function verifyEmail(event) {
     const emailInput = document.getElementById('email');
     const emailError = document.getElementById('emailerror');
     const exptext = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -58,20 +109,27 @@ function checkEmail() {
         return false;
     } else {
         emailError.innerHTML = "";
+        submitForm(event, '/postemail');//각각에 맞는 함수 실행
         return true;
     }
 }
 
-//verify 버튼 onclick
-function submitForm(event) {
-    event.preventDefault();
+// Confirm 버튼 클릭 시
+function confirmToken(event) {
+    submitForm(event, '/checktoken');
+}
 
-    if (checkEmail()) {
+
+// 폼 제출 함수
+function submitForm(event, action) {
+    event.preventDefault(); // form이 제출되기 전에 막아두기
+
+    if (verifyEmail() !== false) {
         const emailInput = document.getElementById('email');
         const email = emailInput.value.trim();
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/postemail', true);
+        xhr.open('POST', action, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onreadystatechange = function () {
@@ -96,7 +154,9 @@ function submitForm(event) {
     }
 }
 
-//코드입력창 엽 카운트다운
+
+
+//코드입력창 옆 카운트다운
 async function countdown() {
         var element, endTime, hours, mins, msLeft, time;
 
@@ -173,27 +233,27 @@ function resetCountdown() {
     tokenInput.value = ""
 }
 
-async function checktoken() {
-    const tokenInput = document.getElementsByName('token')[0];
-    console.log(tokenInput)
-    const email = document.getElementById('email').value
-    const token = tokenInput.value;
-    console.log(token)
+// async function checktoken() {
+//     const tokenInput = document.getElementsByName('token')[0];
+//     console.log(tokenInput)
+//     const email = document.getElementById('email').value
+//     const token = tokenInput.value;
+//     console.log(token)
 
-    // db에서 토큰일치 확인
-    const isTokenValid = await connection.query('select token from tryuser where email=?',[email]);
+//     // db에서 토큰일치 확인
+//     const isTokenValid = await connection.query('select token from tryuser where email=?',[email]);
 
-    console.log(isTokenValid)
+//     console.log(isTokenValid)
 
-    if (isTokenValid.length > 0) {
-        // 토큰 맞아 떨어지면, 토큰 기준 수정(true로 )
-        tokenConfirmed = true;
-        // return true
-    } else {
+//     if (isTokenValid.length > 0) {
+//         // 토큰 맞아 떨어지면, 토큰 기준 수정(true로 )
+//         tokenConfirmed = true;
+//         // return true
+//     } else {
 
-        return false;
-    }
-}
+//         return false;
+//     }
+// }
 
 app.post('/postemail', async (req, res) => {
     const email = req.body.email;
@@ -207,6 +267,27 @@ app.post('/postemail', async (req, res) => {
         res.status(409).json({ error: errorMessage });
     } else {
         res.status(200).json({ message: 'Received email: ' + email });
+    }
+})
+
+app.post('/checktoken', async (req, res) => {
+    const {email, token} = req.body;
+    console.log(email)
+    console.log(token)
+
+    // db에서 토큰일치 확인
+    const isTokenValid = await connection.query('select token from tryuser where email=? and token', [email, token]);
+
+    console.log(isTokenValid)
+
+    if (isTokenValid.length > 0) {
+        // 토큰 맞아 떨어지면, 토큰 기준 수정(true로 )
+        console.log(ok)
+        // tokenConfirmed = true;
+        // return true
+    } else {
+        console.log(fail)
+        // return false;
     }
 })
 

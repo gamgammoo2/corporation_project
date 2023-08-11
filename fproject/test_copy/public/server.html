@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <script src="./main.js"></script>
+    <script>
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                document.location.reload();
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <span style="line-height:50%"><h1>Sign Up</h1></span>
+    <span style="line-height:50%"><h3>Enter email address for verification.</h3></span>
+
+    <form name="postemail" action="/postemail" method="post" onsubmit="submitForm(event)">
+        <b class="text">Email</b>
+        <br>
+        <input class="text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+
+        <span style="line-height:50%"><br></span>
+        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+        <div id="emailerror" style="color: red;"></div>
+
+        <div>
+            <button class="text" type="submit" id="checkemail" onclick="verifyEmail()" disabled>Verify</button>
+        </div>
+        
+        <!-- toggle div -->
+        <div class="container" id="inputDiv" style="display:none">
+        
+        <br>
+
+        <input class="text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token">&nbsp;
+
+        <span id="timer" style="color:red;"></span> 
+        <!-- timer -->
+
+        <span style="line-height:50%"><br></span>
+        <div>
+            <button class="text" type="button"  id="tokenresend" onclick="resetCountdown()" disabled>Resend</button>
+            <button class="text" type="submit" formaction="/checktoken" id="tokenconfirm" onclick="confirmToken()">Confirm</button>
+        </div>
+
+        </div>
+    </form>
+</body>
+
+</html>
