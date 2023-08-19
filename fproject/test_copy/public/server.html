@@ -16,9 +16,18 @@
 
 <body>
     <span style="line-height:50%"><h1>Sign Up</h1></span>
-    <span style="line-height:50%"><h3>Enter email address for verification.</h3></span>
+    <span style="line-height:50%" id="h3_1"><h3>Enter email address for verification.</h3></span>
+    <span id="h3_2" style="display:none">
+        <h3>Check if below information is correct.
+            <br>For incorrect information, please contact support after singup.
+        </h3>
+    </span>
+    <span id="h3_3" style="display:none">
+        <h3>Enter password and nickname.
+        </h3>
+    </span>
 
-    <form name="postemail" action="/postemail" method="post" onsubmit="submitForm(event)">
+    <form name="postemail" >
         <b class="text">Email</b>
         <br>
         <input class="text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
@@ -28,27 +37,194 @@
         <div id="emailerror" style="color: red;"></div>
 
         <div>
-            <button class="text" type="submit" id="checkemail" onclick="verifyEmail()" disabled>Verify</button>
+            <button class="text" type="submit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
         </div>
-        
+    </form>
+    <form name="tokencheck" >
         <!-- toggle div -->
         <div class="container" id="inputDiv" style="display:none">
         
         <br>
-
-        <input class="text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token">&nbsp;
+        <input class="text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token" id="token">&nbsp;
 
         <span id="timer" style="color:red;"></span> 
         <!-- timer -->
 
         <span style="line-height:50%"><br></span>
         <div>
-            <button class="text" type="button"  id="tokenresend" onclick="resetCountdown()" disabled>Resend</button>
-            <button class="text" type="submit" formaction="/checktoken" id="tokenconfirm" onclick="confirmToken()">Confirm</button>
+            <button class="text" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button>
+            <button class="text" type="submit" id="tokenconfirm" onclick="confirmToken(event)" disabled>Confirm</button>
         </div>
 
         </div>
     </form>
+    <form name="information">
+        <div class="container" id="preinformation" style="display:none">
+            <b class="text">Name</b>
+            <br>
+            <input class="text" type="text" name="name" id="name" disabled>&nbsp;
+            <br>
+            <b class="text">Group</b>
+            <br>
+            <input class="text" type="text" name="group" id="group" disabled>&nbsp;
+            <br>
+            <b class="text">Team</b>
+            <br>
+            <input class="text" type="text" name="team" id="team" disabled>&nbsp;
+            <br>
+            <button class="text" type="button" id="information" onclick="informcontinue()" >Continue</button>
+
+        </div>
+    </form>
+    <form name="realinform">
+        <div class="container" id="realinformation" style="display:none">
+            <b class="text">Password</b>
+            <br>
+            <input class="text" type="password" name="password" id="password" placeholder="  Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Password'">&nbsp;
+            
+            <!-- <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+            <div id="passcheck" style="color: red;">
+                <!-- Password must be 8-16 characters long, and contain letters, numbers, and special characters(',",_,￦ excluded). -->
+            </div>
+
+            <input class="text" type="password" name="password2" id="password2" placeholder="  Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Verify Password'">&nbsp;
+            
+            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+            <div id="passverify">
+                <!-- Passwords do no match. -->
+            </div>
+
+            <br>
+            <b class="text">Nickname</b>
+            <br>
+            <input class="text" type="text" name="nickname" id="nickname" placeholder="  Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='  Nickname'">&nbsp;
+            
+            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+            <div id="nickcheck" style="color: red;">
+                <!-- Nickname must be 2-12 characters long, and contain letters, numbers, and underscore. -->
+            </div>
+
+            <br>
+            <button class="text" type="submit" id="signup" onclick="signup(event)">Sign Up</button>
+    
+        </div>
+    </form>
+    <script>
+        const pass1 = document.getElementById('password');
+        pass1.addEventListener('input', passform);
+
+        const pass2 = document.getElementById('password2');
+        pass2.addEventListener('input',passverifing)
+
+        const nick=document.getElementById('nickname')
+        nick.addEventListener('input',nickcheck)
+
+        function passform() {
+            const pass1 = document.getElementById('password');
+            pw = pass1.value.replace(/ /gi, "")
+
+            const divpass = document.getElementById('passcheck')
+
+            var SC = "{}[]/?.,;:|)*~`!^-+<>@#$%&=(";
+            var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            var num = "0123456789"
+            var check_SC = 0;
+            var check_str = 0;
+            var check_num = 0;
+
+            function check_pw() {
+                check_SC = 0;
+                check_str = 0;
+                check_num = 0;
+
+                for (var i = 0; i < SC.length; i++) {
+                    if (pw.indexOf(SC[i]) != -1) {
+                        check_SC = 1;
+                        break
+                    }
+                }
+                for (var i = 0; i < str.length; i++) {
+                    if (pw.indexOf(str[i]) != -1) {
+                        check_str = 1;
+                        break
+                    }
+                }
+                for (var i = 0; i < num.length; i++) {
+                    if (pw.indexOf(num[i]) != -1) {
+                        check_num = 1;
+                        break
+                    }
+                }
+                if (pw.length < 8 || pw.length > 16) {
+                    divpass.innerHTML = 'Password must be 8-16 characters long';
+                } else if (check_SC == 0 || check_str == 0 || check_num == 0) {
+                    divpass.innerHTML = 'Password must contain letters, numbers, and special characters(\',\",_,￦,space excluded).';
+                } else {
+                    divpass.innerHTML = ''
+                }
+
+            }
+            check_pw()
+        }
+
+        function passverifing() {
+            var pass1 = document.getElementById('password').value;
+            var pass2 = document.getElementById('password2').value;
+
+            pw1 = pass1.replace(/ /gi, "")
+            pw2 = pass2.replace(/ /gi, "")
+
+            const divpass = document.getElementById('passverify')
+
+                if (pw1== pw2) {
+                    divpass.innerHTML = ''
+                }
+                else {
+                    divpass.innerHTML = 'Passwords do not match';
+                    divpass.style.color = 'red';
+                }
+
+        }
+
+        function nickcheck() {
+            var nicknam = document.getElementById('nickname').value;
+
+            var nickmix = nicknam.replace(/ /gi, "")
+            var nick=nickmix.toUpperCase()
+
+            var SC = "_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            
+            var check_SC = 0;
+            
+            function check_nick() {
+                check_SC = 0;
+
+                const divpass = document.getElementById('nickcheck')
+                
+
+                for (var i = 0; i < SC.length; i++) {
+                    if (nick.indexOf(SC[i]) != -1) {
+                        check_SC = 1;
+                        break
+                    }
+                }
+
+                var containsSpecialChar = /[^A-Z0-9_]/.test(nick);
+
+                if (nick.length < 2 || nick.length > 12) {
+                    divpass.innerHTML = 'Nickname must be 2-12 characters long';
+                } else if (check_SC == 0) {
+                    divpass.innerHTML = 'Nickname must only contain letters, numbers, and underscore';
+                } else if (containsSpecialChar){
+                    divpass.innerHTML = 'Nickname must only contain letters, numbers, and underscore';
+                }else {
+                    divpass.innerHTML = ''
+                }
+
+            }
+            check_nick()
+        }
+    </script>
 </body>
 
 </html>
