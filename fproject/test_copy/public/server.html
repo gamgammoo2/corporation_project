@@ -76,36 +76,30 @@
 
         </div>
     </form>
-    <form name="realinform">
+    <form name="realinform" onsubmit="submitForm(event,'/realsignup')">
         <div class="container" id="realinformation" style="display:none">
             <b class="text">Password</b>
             <br>
-            <input class="text" type="password" name="password" id="password" placeholder="  Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Password'">&nbsp;
+            <input class="text" type="password" name="password" id="password" placeholder="  Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Password'" oninput='signupbutton()'>&nbsp;
             
             <!-- <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-            <div id="passcheck" style="color: red;">
-                <!-- Password must be 8-16 characters long, and contain letters, numbers, and special characters(',",_,￦ excluded). -->
-            </div>
+            <div id="passcheck" style="color: red;"></div>
 
-            <input class="text" type="password" name="password2" id="password2" placeholder="  Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Verify Password'">&nbsp;
+            <input class="text" type="password" name="password2" id="password2" placeholder="  Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Verify Password'" oninput='signupbutton()'>&nbsp;
             
             <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-            <div id="passverify">
-                <!-- Passwords do no match. -->
-            </div>
+            <div id="passverify"></div>
 
             <br>
             <b class="text">Nickname</b>
             <br>
-            <input class="text" type="text" name="nickname" id="nickname" placeholder="  Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='  Nickname'">&nbsp;
+            <input class="text" type="text" name="nickname" id="nickname" placeholder="  Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='  Nickname'" oninput='signupbutton()'>&nbsp;
             
             <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-            <div id="nickcheck" style="color: red;">
-                <!-- Nickname must be 2-12 characters long, and contain letters, numbers, and underscore. -->
-            </div>
+            <div id="nickcheck" style="color: red;"> </div>
 
             <br>
-            <button class="text" type="submit" id="signup" onclick="signup(event)">Sign Up</button>
+            <button class="text" type="submit" id="signup"  disabled>Sign Up</button>
     
         </div>
     </form>

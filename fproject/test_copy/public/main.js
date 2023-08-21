@@ -90,6 +90,20 @@ function toggleButton() {
     }
 }
 
+
+function signupbutton() {
+    var pass1 = document.getElementById('password');
+    var pass2 = document.getElementById('password2');
+    var nicknam = document.getElementById('nickname');
+    var signupbut= document.getElementById('signup')
+
+    if (pass1.value.trim() !==''&& pass2.value.trim()!=='' && nicknam.value.trim()!=='') {
+        signupbut.disabled = false;
+    } else {
+        signupbut.disabled = true;
+    }
+}
+
 //verify 버튼 토클
 async function toggle1() {
     const email = document.getElementById('email')
@@ -182,13 +196,17 @@ function confirmToken(event) {
     submitForm(event, '/checktoken');
 }
 
-function informcontinue(event){
+function informcontinue(){
     toggle3()
 }
 
-function signup(event){
+function signUp(event){
     submitForm(event,'/realsignup')
 } 
+
+function login() { //login page 이동
+    location.href='./login.html';
+}
 
 // 폼 제출 함수 - verify email, token check
 function submitForm(event, action) {
@@ -271,7 +289,59 @@ function submitForm(event, action) {
         const requestData = JSON.stringify({ email: email, token: token });
         xhr.send(requestData);
         console.log(requestData)
-    }else { //resend token update
+    } else if (action =='/realsignup') { //signup form
+        const emailInput = document.getElementById('email');
+        const email = emailInput.value.trim();
+
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;
+        const nickname = document.getElementById('nickname').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', action, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status == 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    const successResponse = JSON.parse(xhr.responseText);
+                    const successmessage = successResponse.success;
+                    alert(successmessage);
+                    login()
+                }else if (xhr.status == 201) {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    const successResponse = JSON.parse(xhr.responseText);
+                    const successmessage = successResponse.success;
+                    alert(successmessage);
+                    login()
+                }else if (xhr.status == 407) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    const errorMessage = errorResponse.error;
+                    alert(errorMessage);
+                }else if (xhr.status == 408) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    const errorMessage = errorResponse.error;
+                    alert(errorMessage);
+                } else if (xhr.status == 409) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    const errorMessage = errorResponse.error;
+                    alert(errorMessage);
+                } else if (xhr.status == 410) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    const errorMessage = errorResponse.error;
+                    alert(errorMessage);
+                } else {
+                    console.error('Request failed with status:', xhr.status);
+                }
+            }
+        };
+
+        const requestData = JSON.stringify({ email: email, password:password,password2:password2, nickname:nickname}); //여기서 보내줘야 post의 body로 보내질 수 있음(8/21 하루종일 못찾은 오류...)
+        xhr.send(requestData);
+    } else { //resend token update
         const emailInput = document.getElementById('email');
         const email = emailInput.value.trim();
 
@@ -483,16 +553,42 @@ app.post('/updatetoken', async (req, res) => {
 app.post('/realsignup', async (req, res) => {
     const {email,password,password2,nickname} = req.body;
 
-    // const email = document.forms["postemail"].element["email"].value;
     console.log(email)
-    console.log(token2)
-    console.log(now)
+    console.log(password)
+    console.log(password2)
+    console.log(nickname)
 
+    //db에서 토큰인증이 된 유저만 고르기 -> preuser인지의 유무
+    const correct=await connection.query('select state from tryuser where email=? and state=?', [email,'correct']); //expired time이 왜인지...영국 기준으로 되어있는 것 같다.
+    const correct_h = await connection.query('select state from tryuser where email=? and state=?', [email, 'correct_h']);
 
-
-    // db에서 토큰일치 확인
-    await connection.query('update tryuser set expired=? where email=?', [expired, email]); //expired time이 왜인지...영국 기준으로 되어있는 것 같다.
-    await connection.query('update tryuser set token=? where email=?', [token2, email]) //set expired and token 두개로 뒀는데 token이 입력이 안되서 따로 만듬
+    const usergroup = await connection.query('select stgroup from preuser where email=?', [email])
+    const userteam = await connection.query('select team from preuser where email=?', [email])
+    
+    if (password==password2 ) { //다 만족
+        if ( correct[0][0].state=='correct') { //preuser
+            await connection.query('insert into realuser values (?,?,?,?,?,?)',[,email,nickname,password,usergroup[0][0].stgroup,userteam[0][0].team])
+            const successmessage = "Thank you for signing up! You are signed up.Try login now";
+            res.status(200).json({ success:successmessage , username : nickname, usergroup:usergroup, userteam:userteam });
+        } else if (correct_h[0][0].state=='correct_h') { //not preuser
+            await connection.query('insert into holding values (?,?,?,?)',[,email,nickname,password])
+            const successmessage2 = "Thank you for signing up! You are signed up. You may login after approval.";
+            res.status(201).json({ success:successmessage2 , username : nickname});
+        } else {
+            const errorMessage4 = "Sorry. There is something missing.";
+            res.status(410).json({ error: errorMessage4 });
+        } 
+    } else if (password != password2 && 13>nickname.length >=2) { //패스워드 불일치
+        const errorMessage1 = "Please Check Forms(passwords)";
+        res.status(407).json({ error: errorMessage1 });
+    } else if (password == password2 && nickname.length <2 ||nickname.length >12){
+        //닉네임 길이
+        const errorMessage2 = "Please Check Forms(nickname)";
+        res.status(408).json({ error: errorMessage2 });
+    }else {
+        const errorMessage3 = "Please Check Forms";
+        res.status(409).json({ error: errorMessage3 });
+    }
 })
 
 module.exports = app;
