@@ -12,10 +12,200 @@
                 document.location.reload();
             }
         };
+
+        
     </script>
+    <style>
+    /* html, body 영역 스타일 지정 */
+		html, body{
+			width : 100%;
+			height : 100%;
+			margin : 0;
+			padding : 0;
+			border : none;	
+			
+			/* 스크롤바 표시 지정 */
+			overflow : auto;					
+		}
+		
+		
+		/* body 스크롤바 메인 스타일 지정 */
+		body::-webkit-scrollbar {
+			/* 스크롤바 너비 지정 */
+			width: 10px;
+			
+			/* 스크롤바 배경 색상 지정 */
+			background-color: #c1c1c1;
+		}
+		/* body 스크롤바 thumb 스타일 지정 */
+		body::-webkit-scrollbar-thumb {					
+			/* 스크롤바 thumb 색상 지정 */
+			background-color: #444444;
+		}
+		
+		
+		/* 전체 영역 덮는 div 스타일 지정 */
+		#body_full{
+			width : 100%;
+			height : 100%;
+			margin : 0;
+			padding : 0;
+			border : none;	
+
+			/* 배경 색상 지정 : 검정색 */
+			background-color : #000000;
+
+			/* 포지션 지정 실시 : fixed 사용해 브라우저 전체 덮음 */
+			position: fixed;
+			top : 0%;
+			left : 0%;
+
+			/* z-index 우선 순위 설정 : 다른 레이아웃 보다 크고, 팝업창 보단 작아야함 */
+			z-index : 998;
+
+			/* 투명도 조절 실시 */
+			opacity : 0.5;
+
+			/* display 설정 : 표시 여부 */
+			display : none;
+		}
+        
+        
+		/* 버튼 div 스타일 지정 */
+		#btn_container {
+			width : 30%;
+			height : 20%;
+			margin : 0 auto;
+			padding : 0;
+			border : none;
+			background-color : #0a1a2e;
+					
+			/* 컨테이너 배치 정렬 실시 */
+			float : top;
+			position : relative; 
+			top : 10%;
+			left : 0%;
+			
+			/* 마우스 커서 스타일 */
+			cursor : pointer;
+			
+			/* div 테두리 원형 설정 */
+			border-radius : 20px; 
+			
+			/* display 설정 : p 태그 수직 정렬 */
+			display : table; 
+			
+			/* p 태그 텍스트 내용 길면 숨김 처리 하기 위함 */
+			table-layout: fixed;												   
+		}
+		
+		
+		/* 버튼 p 텍스트 스타일 지정 */
+		#btn_txt {
+			/* 텍스트 수평 정렬 지정 */
+			text-align : center;
+			
+			/* 텍스트 색상 지정 */
+			color : #ffffff;
+			
+			/* 텍스트 굵기 지정 */
+			font-weight : bold;
+			
+			/* 텍스트 사이즈 지정 */        	
+			font-size : 3vw;
+        	
+			/* 텍스트 수직 정렬 실시 */        	        	 	
+			display : table-cell;
+			vertical-align : middle;
+			
+			/* p 태그 텍스트 내용 길면 숨김 처리*/
+			overflow : hidden;
+			text-overflow : ellipsis;
+			white-space : nowrap;																			  								   
+		}
+		
+		
+		/* 팝업창 레이아웃 지정 */
+		#popup_container {
+			width : 500px;
+			margin : 0 auto;
+			padding : 0;
+			border : none;
+
+            /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+			background : #262B49;
+					
+			/* 컨테이너 배치 정렬 실시 : fixed를 사용해야 브라우저 기준으로 위치 표시함 */
+			float : top;
+			position : fixed; 
+			top : 10%;
+			align-items: center;
+			
+			/* 마우스 커서 스타일 */
+			cursor : pointer;
+			
+			/* div 테두리 원형 설정 */
+			border-radius : 20px; 
+			
+			/* display 설정 : 표시여부 */
+			display : none;
+			
+			/* z-index 우선 순위 설정 */
+			z-index : 999; 																		  								   
+		}
+        
+        #up_text {
+            color: white;
+            padding: 10px;
+            font-family: Arial;
+            font-size: 25px;
+            font-weight:500;
+        }
+
+        #separator {
+            width: 90%;
+            border: none;
+            border-top: 1px solid white; /* 얇은 선 */
+        }
+
+        #down_text {
+            color: white;
+            padding: 10px;
+            font-family: Arial;
+            font-size: 15px;
+            font-weight:500;
+        }
+
+        #close_button {
+        position:absolute; 
+        bottom:10px; 
+        right:10px; 
+        }
+
+        </style>
+
 </head>
 
 <body>
+    <!-- body 영역 전체 덮는 레이아웃 -->
+    <div id="body_full"></div>
+    
+    
+    <!-- 팝업창 레이아웃 -->
+    <div id="popup_container">
+        <div id="up_text"></div>
+        <hr id="separator" />
+        <div id="down_text"></div>
+        <br>
+        <button id="close_button" onclick="window.location.reload()">Close</button>
+    </div>
+
+
+    
+
+
+
+
     <span style="line-height:50%"><h1>Sign Up</h1></span>
     <span style="line-height:50%" id="h3_1"><h3>Enter email address for verification.</h3></span>
     <span id="h3_2" style="display:none">
@@ -38,8 +228,9 @@
         <div id="emailerror" style="color: red;"></div>
 
         <div>
-            <button class="text" type="submit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
+            <button class="text" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
         </div>
+        
     </form>
     <form name="tokencheck" id="tokencheck">
         <!-- toggle div -->
@@ -104,6 +295,12 @@
     
         </div>
     </form>
+
+    
+    
+    
+    
+
     <script>
         const pass1 = document.getElementById('password');
         pass1.addEventListener('input', passform);
@@ -219,6 +416,9 @@
             }
             check_nick()
         }
+
+        
+        
     </script>
 </body>
 

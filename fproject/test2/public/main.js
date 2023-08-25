@@ -240,6 +240,45 @@ function login() { //login page 이동
     location.href='./login.html';
 }
 
+
+//팝업창
+/* 바디 영역 투명도 표시 이벤트 함수 정의 */
+function bodyFull() {
+    /* display 값 확인 */
+    var tagId = document.getElementById("body_full");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        console.log("bodyFull : debug [2]");
+        tagId.style.display = "block";
+    }
+    else {
+        console.log("bodyFull : debug [3]");
+        tagId.style.display = "none";
+    }
+};
+
+
+/* 팝업창 호출 이벤트 함수 정의 */
+function call_popup(up,down) {
+    /* display 값 확인 */
+    var tagId = document.getElementById("popup_container");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        document.getElementById('up_text').innerHTML = up;
+        document.getElementById('down_text').innerHTML = down;
+        tagId.style.display = "block";
+    }
+    else {
+        tagId.style.display = "none";
+    }
+
+    /* body 영역 투명도 표시 함수 호출 */
+    bodyFull();
+};
+
+
 // 폼 제출 함수 - verify email, token check,realsignup
 function submitForm(event, action) {
     event.preventDefault(); // form이 제출되기 전에 막아두기
@@ -265,7 +304,7 @@ function submitForm(event, action) {
                 }else if (xhr.status == 408) {
                     const errorResponse = JSON.parse(xhr.responseText);
                     const errorMessage = errorResponse.error;
-                    alert(errorMessage);
+                    call_popup('Warning!',errorMessage) //holding 유저가 가입하려할때
                 } else if (xhr.status == 409) {
                     const errorResponse = JSON.parse(xhr.responseText);
                     const errorMessage = errorResponse.error;
@@ -499,10 +538,10 @@ app.post('/postemail', async (req, res) => {
             connection.query('delete from tryuser where email=? and state=?', [email, 'correct'])
             connection.query('delete from tryuser where email=? and state=?', [email, 'correct_h'])
 
-            setTimeout(async () =>{
+            // setTimeout(async () =>{
                 connection.query('insert into tryuser values (?,?,?,?,?)', [, email, token, expired, 'tokensend'])
 
-                setTimeout(async () => {
+                // setTimeout(async () => {
                 const insertingcheck2 = await connection.query('select token from tryuser where email=? and state=?', [email, 'tokensend'])
 
                 if (3 > insertingcheck2.length > 0) {
@@ -512,9 +551,9 @@ app.post('/postemail', async (req, res) => {
                 } else {
                     res.status(407).json({ error: "db token insert error" })
                 }
-            },5);
+            // },5);
 
-            },5)
+            // },5)
         } else {
             connection.query('update tryuser set token=? where email=?',[token,email])
             setTimeout(async () => {

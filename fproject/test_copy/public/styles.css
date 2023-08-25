@@ -1,0 +1,112 @@
+/* styles.css */
+
+/* 배경 스타일 */
+body {
+    background-color: #1B1F38;
+    position: relative;
+}
+
+/* 모든 폼 요소를 숨김 */
+form {
+    display: none;
+}
+
+/* postmail 폼이 활성화될 때 해당 폼 요소만 보임 */
+#postmail {
+    display: block;
+}
+
+/* h1 스타일 */
+h1 {
+    color: var(--theme-white, #FFF);
+    text-align: center;
+    text-shadow: 0px 1px 15px #00F9FF;
+    font-family: Arial;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    height: 10vh
+}
+
+/* h3 스타일 */
+h3 {
+    color: var(--theme-white, #FFF);
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+/* <b> 태그 스타일 */
+b {
+    color: var(--theme-white, #FFF);
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    /* line-height: normal; */
+    /* margin-right: 10px; */
+    /* text-align: normal */
+}
+
+b.text {
+    
+}
+
+.input-container {
+        display: flex;
+        align-items: center;
+    }
+
+/* inputbox 스타일 */
+form[name="postemail"] input.text {
+    font-family: Arial;
+    color: white;
+    width: 300px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: var(--theme-background-light, #262B49);
+    align-items: center;
+}
+
+/* 버튼 스타일 */
+.button {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 2px solid var(--theme-point-color, #00F9FF);
+    background: var(--theme-background, #1B1F38);
+    color: var(--theme-point-color, #00F9FF);
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    width: 123px;
+}
+
+/* form 태그 가운데 정렬 */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 100vh; 화면 높이 기준으로 가운데 정렬 */
+}
+
+/* 활성화된 버튼 스타일 */
+.button.active {
+    width: 123px;
+    height: 47px;
+    flex-shrink: 0;
+    border: 2px solid #00F9FF;
+    color: #00F9FF;
+}
