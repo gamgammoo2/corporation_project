@@ -151,7 +151,7 @@
 
             /* 팝업창 가운데 정렬을 위한 속성들 */ 
             position: fixed;
-            top: 10%;
+            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
 
@@ -166,6 +166,7 @@
             font-family: Arial;
             font-size: 25px;
             font-weight:500;
+            margin-left: 10px;
         }
 
         #separator {
@@ -175,20 +176,87 @@
         }
 
         #down_text {
+            width:90%;
             color: white;
             padding: 10px;
             font-family: Arial;
             font-size: 15px;
             font-weight:500;
+            margin-left: 10px;
         }
 
         #close_button {
         position:absolute; 
         bottom:10px; 
         right:10px; 
+
+        width: 110px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: normal;
+
+        border-color:#00F9FF;
+        background-color: #1B1F38;
+        color: #00F9FF;
+        
         /* 마우스 커서 스타일 */
         cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
         }
+
+        #back_button {
+        position:absolute; 
+        bottom:10px; 
+        right:135px; 
+
+        width: 110px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: normal;
+
+        border-color:white;
+        background-color: #1B1F38;
+        color: white;
+        
+        /* 마우스 커서 스타일 */
+        cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
+        }
+
+        #continue_button {
+        position:absolute; 
+        bottom:10px; 
+        right:10px; 
+
+        width: 120px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: normal;
+
+        border-color:#00F9FF;
+        background-color: #1B1F38;
+        color: #00F9FF;
+        
+        /* 마우스 커서 스타일 */
+        cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
+        }
+
 
         #popup_container2 {
             width : 400px;
@@ -213,7 +281,7 @@
 
             /* 팝업창 가운데 정렬을 위한 속성들 */ 
             position: fixed;
-            top: 10%;
+            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
 
@@ -245,7 +313,7 @@
 
             /* 팝업창 가운데 정렬을 위한 속성들 */ 
             position: fixed;
-            top: 10%;
+            top: 15%;
             left: 50%;
             transform: translate(-50%, -50%);
 
@@ -253,6 +321,39 @@
             cursor : default;  
 
         }
+
+         #popup_container4 {
+            width : 400px;
+            margin : 0 auto;
+            padding : 0;
+            border : none;
+
+            /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+            background : #262B49;
+
+            /* 마우스 커서 스타일 */
+            cursor : pointer;
+
+            /* div 테두리 원형 설정 */
+            border-radius : 10px; 
+
+            /* display 설정 : 표시여부 */
+            display: none;
+
+            /* z-index 우선 순위 설정 */
+            z-index:9999; 
+
+            /* 팝업창 가운데 정렬을 위한 속성들 */ 
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            /* 마우스 커서 스타일 */
+            cursor : default;  
+
+        }
+
 
         </style>
 
@@ -263,156 +364,184 @@
     <div id="body_full"></div>
     
     
-    <!-- 팝업창 레이아웃 팝업 후 ok 누르면 팝업창만 닫히는 -->
+    <!-- 팝업창 레이아웃 팝업 후 ok 누르면 팝업창  닫히는 그리고 페이지 리로드 -->
     <div id="popup_container">
+        <br>
         <div class="up_text" id="up_text"></div>
         <hr id="separator" />
         <div class="down_text" id="down_text"></div>
         <br>
-        <br>
-        <button id="close_button" onclick="closePopup('popup_container')">OK</button>
+        <br><br><br>
+        <button id="close_button" onclick="location.reload()">OK</button>
     </div>
 
     <!-- 팝업창 레이아웃- 팝업 후 login.html로 이동 -->
     <div id="popup_container2">
+        <br>
         <div class="up_text" id="up_text"></div>
         <hr id="separator" />
         <div class="down_text" id="down_text"></div>
         <br>
-        <br>
-        <button id="close_button" onclick="window.location.href = 'login.html'">OK</button>
+        <br><br><br>
+        <button id="close_button" onclick="window.location.href = '/login.html'">OK</button>
     </div>
 
     <!-- 팝업창 레이아웃 - 팝업 후 ok 누르면 닫힘 --> 
     <div id="popup_container3">
+        <br>
         <div class="up_text" id="up_text"></div>
         <hr id="separator" />
         <div class="down_text" id="down_text"></div>
         <br>
-        <br>
-        <button id="back_button" onclick="history.back();">BACK</button>
+        <br><br><br>
+        <button id="back_button" onclick="window.location.href = 'server.html';">BACK</button>
         <button id="continue_button" onclick="closePopup('popup_container3')">CONTINUE</button>
     </div>
+
+    <!-- 닫기 누르면 그냥 닫힘 -->
+    <div id="popup_container4">
+        <br>
+        <div class="up_text" id="up_text"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="closePopup('popup_container4')">OK</button>
+    </div>
     
 
 
-
-    <div class="h1_container">
-        <span style="line-height:50%"><h1>Sign Up</h1></span>
-    </div>
-
-    <div class="h3_container">
-        <span style="line-height:50%" id="h3_1"><h3>Enter email address for verification.</h3></span>
-    </div>
-    
-    <div class="h3_container"></div>
-        <span id="h3_2" style="display:none">
-            <h3>Check if below information is correct.
-                <br>For incorrect information, please contact support after singup.
-            </h3>
-        </span>
-    </div>
-
-    <div class="h3_container">
-        <span id="h3_3" style="display:none">
-            <h3>Enter password and nickname.
-            </h3>
-        </span>
-    </div>
-
-
-    <div class="form_container" id="post_email">
-        <form name="postemail" id="postemail" >
-            <b class="text">Email</b>
+    <div class="center">
+        <div class="h1_container">
+            <span style="line-height:50%"><h1>Sign Up</h1></span>
             <br>
-            <div class="inputs">
-                <input class="input_text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+        </div>
 
-                <span style="line-height:50%"><br></span>
-                <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-                <div class="errors" id="emailerror" style="color: red;"></div>
-
-                <div class="buttons">
-                    <button class="button" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
-                </div>
-            </div>
-            
-        </form>
-    </div>
-
-    <div class="form_container" id="token_check" style="display:none">
-        <form name="tokencheck" id="tokencheck">
-            <!-- toggle div -->
-            <div class="container" id="inputDiv">
-            
-            <br>
-            <input class="input_text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token" id="token">&nbsp;
-            
-            <div class="timers">
-                <span class="timer" id="timer" style="color:red;"></span> 
-                <!-- timer -->
-
-                <!-- <span style="line-height:50%"><br></span> -->
-            </div>
-
-            <div class="buttons">
-                <button class="button confirm" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button>
-                <button class="button resend" type="submit" id="tokenconfirm" onclick="confirmToken(event)" disabled>Confirm</button>
-            </div>
-
-            </div>
-        </form>
-    </div>
-
-    <div class="form_container" id="infor_mation">
-        <form name="information" id="inform">
-            <div class="container" id="preinformation" style="display:none">
-                <b class="text">Name</b>
-                <br>
-                <input class="input_text" type="text" name="name" id="name" disabled>&nbsp;
-                <br>
-                <b class="text">Group</b>
-                <br>
-                <input class="input_text" type="text" name="group" id="group" disabled>&nbsp;
-                <br>
-                <b class="text">Team</b>
-                <br>
-                <input class="input_text" type="text" name="team" id="team" disabled>&nbsp;
-                <br>
-                <button class="button" type="button" id="information" onclick="informcontinue()" >Continue</button>
-
-            </div>
-        </form>
-    </div>
-
-    <div class="form_container" id="real_inform">
-        <form name="realinform" onsubmit="submitForm(event,'/realsignup')" id="realinform">
-            <div class="container" id="realinformation" style="display:none">
-                <b class="text">Password</b>
-                <br>
-                <input class="input_text" type="password" name="password" id="password" placeholder="  Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Password'" oninput='signupbutton()'>&nbsp;
-                
-                <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-                <div id="passcheck" style="color: red;"></div>
-
-                <input class="input_text" type="password" name="password2" id="password2" placeholder="  Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Verify Password'" oninput='signupbutton()'>&nbsp;
-                
-                <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-                <div id="passverify"></div>
-
-                <br>
-                <b class="text">Nickname</b>
-                <br>
-                <input class="input_text" type="text" name="nickname" id="nickname" placeholder="  Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='  Nickname'" oninput='signupbutton()'>&nbsp;
-                
-                <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-                <div id="nickcheck" style="color: red;"> </div>
-
-                <br>
-                <button class="button" type="submit" id="signup"  disabled>Sign Up</button>
+        <div class="h3_container">
+            <span style="line-height:50%" id="h3_1"><h3>Enter email address for verification.</h3></span>
+        </div>
         
+        <div class="h3_container">
+            <span id="h3_2" style="display:none">
+                <h3>Check if below information is correct.
+                    <br>For incorrect information, please contact support after singup.
+                </h3>
+            </span>
+        </div>
+
+        <div class="h3_container">
+            <span id="h3_3" style="display:none">
+                <h3>Enter password and nickname.
+                </h3>
+            </span>
+        </div>
+
+
+        <div class="boxcontainer">
+            <div class="form_container1" id="post_email">
+                <form name="postemail" id="postemail" >
+                    <div class="email">
+                        <br>
+                        <b class="text">Email</b>
+                        <br>
+                        <div class="inputs">
+                            <input class="input_text" type="email" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+
+                            <span style="line-height:50%"><br></span>
+                            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                            <div class="errors" id="emailerror" style="color: red;"></div>
+                            <br>
+                            <div class="buttons">
+                                <button class="button" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
             </div>
-        </form>
+
+            <div class="form_container" id="token_check" style="display:none">
+                <form name="tokencheck" id="tokencheck">
+                    <!-- toggle div -->
+                    <div class="container2" id="inputDiv">
+                    
+                    <br>
+                    <div class="token_box">
+                        <input class="input_text" type="text" placeholder="Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='Verification Code'" name="token" id="token">
+                    <!-- </div> -->
+                        &nbsp;
+                    
+                    <!-- <div class="timers"> -->
+                        <span class="timer" id="timer" style="color:red;"></span> 
+                        <!-- timer -->
+
+                    </div>
+                    <br><br>
+                    <div class="buttons2">
+                        <button class="button resend" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button> 
+                        <button class="button confirm" type="submit" id="tokenconfirm" onclick="confirmToken(event)" disabled>Confirm</button>
+                    </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="form_container" id="infor_mation">
+                <form name="information" id="inform">
+                    <div class="container3" id="preinformation" style="display:none">
+                        <b class="text">Name</b>
+                        <br>
+                        <input class="input_text" type="text" name="name" id="name" disabled>&nbsp;
+                        <br>
+                        <Br>
+                        <b class="text">Group</b>
+                        <br>
+                        <input class="input_text" type="text" name="group" id="group" disabled>&nbsp;
+                        <br>
+                        <br>
+                        <b class="text">Team</b>
+                        <br>
+                        <input class="input_text" type="text" name="team" id="team" disabled>&nbsp;
+                        <br>
+                        <br>
+                        <button class="button" type="button" id="information" onclick="informcontinue()" >Continue</button>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="form_container" id="real_inform">
+                <form name="realinform" onsubmit="submitForm(event,'/realsignup')" id="realinform">
+                    <div class="container4" id="realinformation" style="display:none">
+                        <b class="text">Password</b>
+                        <br>
+                        <input class="input_text" type="password" name="password" id="password" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'" oninput='signupbutton()'>&nbsp;
+                        
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="passcheck" style="color: red;"></div>
+                        <br>
+
+                        <input class="input_text" type="password" name="password2" id="password2" placeholder="Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='Verify Password'" oninput='signupbutton()'>&nbsp;
+                        <br>
+
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="passverify"></div>
+
+                        <br>
+                        <b class="text">Nickname</b>
+                        <br>
+                        <input class="input_text" type="text" name="nickname" id="nickname" placeholder="Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='Nickname'" oninput='signupbutton()'>&nbsp;
+                        
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="nickcheck" style="color: red;"> </div>
+                        <Br>
+                        <br>
+                        <button class="button" type="submit" id="signup"  disabled>Sign Up</button>
+                
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     

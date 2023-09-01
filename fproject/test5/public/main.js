@@ -115,8 +115,12 @@ function toggleButton() {
 
     if (emailInput.value.trim() !== '') {
         emailbut.disabled = false;
+        emailbut.style.border = "1px solid #00F9FF";
+        emailbut.style.color = "#00F9FF";
     } else {
-        emailbut.disabled = true;
+        emailbut.disabled = true
+        emailbut.style.border = "1px solid #248183";
+        emailbut.style.color = "#248183";
     }
 }
 
@@ -285,8 +289,8 @@ function call_popup2(up,down) {
     var display = window.getComputedStyle(tagId).display;
 
     if (display == "none") {
-        document.getElementById('up_text').innerHTML = up;
-        document.getElementById('down_text').innerHTML = down;
+        document.getElementById('up_text2').innerHTML = up;
+        document.getElementById('down_text2').innerHTML = down;
         tagId.style.display = "block";
     }
     else {
@@ -304,8 +308,66 @@ function call_popup3(up,down) {
     var display = window.getComputedStyle(tagId).display;
 
     if (display == "none") {
-        document.getElementById('up_text').innerHTML = up;
-        document.getElementById('down_text').innerHTML = down;
+        document.getElementById('up_text3').innerHTML = up;
+        document.getElementById('down_text3').innerHTML = down;
+        tagId.style.display = "block";
+    }
+    else {
+        tagId.style.display = "none";
+    }
+
+    /* body 영역 투명도 표시 함수 호출 */
+    bodyFull();
+};
+
+/* 팝업창3 호출 이벤트 함수 정의 */
+function call_popup4(up, down) {
+    /* display 값 확인 */
+    var tagId = document.getElementById("popup_container4");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        document.getElementById('up_text4').innerHTML = up;
+        document.getElementById('down_text4').innerHTML = down;
+        tagId.style.display = "block";
+    }
+    else {
+        tagId.style.display = "none";
+    }
+
+    /* body 영역 투명도 표시 함수 호출 */
+    bodyFull();
+};
+
+/* 팝업창3 호출 이벤트 함수 정의 */
+function call_popup5(up, down) {
+    /* display 값 확인 */
+    var tagId = document.getElementById("popup_container5");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        document.getElementById('up_text5').innerHTML = up;
+        document.getElementById('down_text5').innerHTML = down;
+        tagId.style.display = "block";
+    }
+    else {
+        tagId.style.display = "none";
+    }
+
+    /* body 영역 투명도 표시 함수 호출 */
+    bodyFull();
+};
+
+
+/* 팝업창3 호출 이벤트 함수 정의 */
+function call_popup6(up, down) {
+    /* display 값 확인 */
+    var tagId = document.getElementById("popup_container6");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        document.getElementById('up_text6').innerHTML = up;
+        document.getElementById('down_text6').innerHTML = down;
         tagId.style.display = "block";
     }
     else {
@@ -333,7 +395,7 @@ function submitForm(event, action) {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 if (xhr.status == 200) {
                     const data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     const token = data.token
                     toggle1();
                     countdown();
@@ -364,6 +426,8 @@ function submitForm(event, action) {
         const tokenInput = document.getElementById('token');
         const token = tokenInput.value;
 
+        const tokenConfirmButton = document.getElementById('tokenconfirm');
+
         const xhr = new XMLHttpRequest();
         xhr.open('POST', action, true);
         console.log('true')
@@ -373,15 +437,14 @@ function submitForm(event, action) {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 if (xhr.status == 200) {
                     const data = JSON.parse(xhr.responseText);
-                    console.log({'preuser_ok_xhr':data});
+                    console.log('preuser_ok_xhr');
                     nocountdown()
-                    call_popup('Token Confirmed!','Please continue to sign up.') //이메일 완료
                     toggle2(data.username[0][0].name,data.usergroup[0][0].stgroup,data.userteam[0][0].team)
                     
                 } else if (xhr.status == 201) {
                     const dataresponse = JSON.parse(xhr.responseText);
                     const message = dataresponse.message 
-                    console.log({ 'nopreuser_ok_xhr': dataresponse });
+                    console.log( 'nopreuser_ok_xhr');
                     call_popup3('Warning!',message) //이메일 완료, not preuser 팝업
                     nocountdown()
                     // if(confirm(message)==true){
@@ -392,7 +455,9 @@ function submitForm(event, action) {
                 } else if (xhr.status == 409) {
                     const errorResponse = JSON.parse(xhr.responseText);
                     const errorMessage = errorResponse.error;
-                    call_popup('Warning!',errorMessage) //토큰 미일치
+                    console.log(errorMessage)
+                    call_popup4('Warning!',errorMessage) //토큰 미일치
+                    tokenConfirmButton.disabled = true;
                 } else {
                     console.error('Request failed with status:', xhr.status);
                 }
@@ -401,7 +466,7 @@ function submitForm(event, action) {
 
         const requestData = JSON.stringify({ email: email, token: token });
         xhr.send(requestData);
-        console.log(requestData)
+        // console.log(requestData)
     } else if (action =='/realsignup') { //signup form
         const emailInput = document.getElementById('email');
         const email = emailInput.value.trim();
@@ -409,6 +474,8 @@ function submitForm(event, action) {
         const password = document.getElementById('password').value;
         const password2 = document.getElementById('password2').value;
         const nickname = document.getElementById('nickname').value;
+
+        const signupButton = document.getElementById('signup');
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', action, true);
@@ -418,14 +485,14 @@ function submitForm(event, action) {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 if (xhr.status == 200) {
                     const data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     const successResponse = JSON.parse(xhr.responseText);
                     const successmessage = successResponse.success;
                     call_popup2('Thank you for signing up! ',successmessage)
           
                 }else if (xhr.status == 201) {
                     const data = JSON.parse(xhr.responseText);
-                    console.log(data);
+                    // console.log(data);
                     const successResponse = JSON.parse(xhr.responseText);
                     const successmessage = successResponse.success;
                     call_popup2('Thank you for signing up! ',successmessage)
@@ -449,7 +516,8 @@ function submitForm(event, action) {
                 } else if (xhr.status == 501){
                     const errorResponse = JSON.parse(xhr.responseText);
                     const errorMessage = errorResponse.error;
-                    alert(errorMessage); 
+                    signupButton.disabled = true;
+                    call_popup6('Warning',errorMessage) 
                 } else {
                     console.error('Request failed with status:', xhr.status);
                 }
@@ -468,10 +536,16 @@ function submitForm(event, action) {
 
         const requestData = JSON.stringify({ email: email});
         xhr.send(requestData);
-        console.log(requestData)
+        // console.log(requestData)
     }
 }
   
+// 토큰 불일치 이후 popup창 이후에 ok 누르면 다시 confirm 버튼 활성화
+function reconfirm(id) {
+    const button = document.getElementById(id);
+    button.disabled = false;
+
+}
 
 
 //countdown() 함수 수정 (confirm 되면 countdown이 멈출 수 있게)
@@ -491,6 +565,13 @@ async function countdown() {
         // Confirm 버튼 활성화 여부를 체크하는 함수
         function checkConfirmButton() {
             tokenConfirmButton.disabled = tokenInput.value.length < 6;
+            if (tokenInput.value.length >5){
+                tokenConfirmButton.style.border = "1px solid #00F9FF";
+                tokenConfirmButton.style.color = "#00F9FF";
+            } else {
+                tokenConfirmButton.style.border = "1px solid #248183";
+                tokenConfirmButton.style.color = "#248183";
+            }
         }
         
         // Confirm 버튼 활성화 여부 감시
@@ -502,10 +583,14 @@ async function countdown() {
             if (tokenConfirmed== false && msLeft < 0) {
                 console.log('done');
                 // 10분안에 입력하지 않은 코드는 expired
-                call_popup('Warning','Time expired.')
-                tokenResendButton.disabled = false;
+                call_popup5('Warning','Time expired.')
+                tokenResendButton.disabled = true;
                 tokenConfirmButton.disabled=true;
                 tokenInput.disabled=true;
+                tokenResendButton.style.border = "1px solid white";
+                tokenResendButton.style.color = "white";
+                tokenConfirmButton.style.border = "1px solid #248183";
+                tokenConfirmButton.style.color = "#248183";
 
             } else { //timeout 안됬을때,token 일치 안함 => 시간 계속 흐름
                 time = new Date(msLeft);
@@ -517,7 +602,7 @@ async function countdown() {
             }
         }
         element = document.getElementById('timer');
-        endTime = (+new Date) + 1000 * 10; // 600이 10분 5는 5초
+        endTime = (+new Date) + 1000 * 300; // 600이 10분 5는 5초
         updateTimer();
     
 }
@@ -544,6 +629,8 @@ async function nocountdown() { //confirm 되면 countdown이 멈추기 0:00 표�
 function resetCountdown(event) { //resend 버튼 누르면 실행되는 동작
     const tokenResendButton = document.getElementById('tokenresend');
     const tokenInput = document.getElementsByName('token')[0];
+    tokenResendButton.style.border = "1px solid rgb(166, 160, 160)"
+    tokenResendButton.style.color = "rgb(166, 160, 160)"
     tokenInput.disabled = false;
     tokenResendButton.disabled = true;
     countdown(); // countdown을 다시 시작함
@@ -555,7 +642,7 @@ function resetCountdown(event) { //resend 버튼 누르면 실행되는 동작
 
 app.post('/postemail', async (req, res) => {
     const email = req.body.email;
-    console.log(email)
+    // console.log(email)
 
     const alreadyemail = await connection.query("select email from realuser where email=?", [email]);
     const holdemail = await connection.query("select email from holding where email=?",[email])
@@ -572,7 +659,7 @@ app.post('/postemail', async (req, res) => {
         res.status(408).json({error : holdingMessage})
     } else {
         const insertingcheck = await connection.query('select token from tryuser where email=? and state=?', [email, 'tokensend'])
-        console.log(insertingcheck.length)
+        // console.log(insertingcheck.length)
 
         if (insertingcheck.length > 1) {
             connection.query('delete from tryuser where email=? and state=?',[email,'tokensend'])
@@ -618,7 +705,7 @@ app.post('/checktoken', async (req, res) => {
     const isTokenValid = await connection.query('select token from tryuser where email=? and token=?', [email, token]);
     const preuser = await connection.query('select email from preuser where email=?', [email]);
 
-    console.log(isTokenValid[0].length)
+    // console.log(isTokenValid[0].length)
 
     if (isTokenValid[0].length > 0 && preuser[0].length >0) {
         await connection.query('update tryuser set state=? where email=?',['correct',email])
@@ -652,9 +739,9 @@ app.post('/updatetoken', async (req, res) => {
     now.setMinutes(now.getMinutes() +10)
     var expired = new Date(now)
     // const email = document.forms["postemail"].element["email"].value;
-    console.log(email)
-    console.log(token2)
-    console.log(now)
+    // console.log(email)
+    // console.log(token2)
+    // console.log(now)
 
     // db에서 토큰일치 확인
     await connection.query('update tryuser set expired=? where email=?', [expired, email]); //expired time이 왜인지...영국 기준으로 되어있는 것 같다.
@@ -666,10 +753,10 @@ app.post('/updatetoken', async (req, res) => {
 app.post('/realsignup', async (req, res) => {
     const {email,password,password2,nickname} = req.body;
 
-    console.log(email)
-    console.log(password)
-    console.log(password2)
-    console.log(nickname)
+    // console.log(email)
+    // console.log(password)
+    // console.log(password2)
+    // console.log(nickname)
 
     //db에서 토큰인증이 된 유저만 고르기 -> preuser인지의 유무
     const states=await connection.query('select state from tryuser where email=?', [email]); //expired time이 왜인지...영국 기준으로 되어있는 것 같다.
@@ -681,7 +768,9 @@ app.post('/realsignup', async (req, res) => {
     const usergroup = await connection.query('select stgroup from preuser where email=?', [email])
     const userteam = await connection.query('select team from preuser where email=?', [email])
 
-    if (nickdouble1[0]=="" || nickdouble2[0]== "") {
+    // console.log(nickdouble1[0],nickdouble2[0])
+
+    if (nickdouble1[0]=="" && nickdouble2[0]== "") {
 
         if (password==password2 ) { //다 만족
             if ( states[0][0].state=='correct') { //preuser
@@ -694,7 +783,7 @@ app.post('/realsignup', async (req, res) => {
                 await connection.query('update tryuser set state=? where email=?', ["done", email]);
                 const successmessage2 = "You are signed up. You may login after approval.";
                 res.status(201).json({ success:successmessage2 , username : nickname});
-            } else {
+            }  else {
                 const errorMessage4 = "password1 == password2. But there is something missing.";
                 res.status(410).json({ error: errorMessage4 });
             } 

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./main.js"></script>
+    <script>
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                document.location.reload();
+            }
+        };
+
+        
+    </script>
+    <style>
+    /* html, body 영역 스타일 지정 */
+		html, body{
+			width : 100%;
+			height : 100%;
+			margin : 0;
+			padding : 0;
+			border : none;	
+			
+			/* 스크롤바 표시 지정 */
+			overflow : auto;					
+		}
+		
+		
+		/* body 스크롤바 메인 스타일 지정 */
+		body::-webkit-scrollbar {
+			/* 스크롤바 너비 지정 */
+			width: 10px;
+			
+			/* 스크롤바 배경 색상 지정 */
+			background-color: #c1c1c1;
+		}
+		/* body 스크롤바 thumb 스타일 지정 */
+		body::-webkit-scrollbar-thumb {					
+			/* 스크롤바 thumb 색상 지정 */
+			background-color: #444444;
+            /* 팝업창 뜨면 뒤에 작동 안하게 */
+             pointer-events: none;
+		}
+		
+		
+		/* 전체 영역 덮는 div 스타일 지정 */
+		#body_full{
+			width : 100%;
+			height : 100%;
+			margin : 0;
+			padding : 0;
+			border : none;	
+
+			/* 배경 색상 지정 : 검정색 */
+			background-color : #000000;
+
+			/* 포지션 지정 실시 : fixed 사용해 브라우저 전체 덮음 */
+			position: fixed;
+			top : 0%;
+			left : 0%;
+
+			/* z-index 우선 순위 설정 : 다른 레이아웃 보다 크고, 팝업창 보단 작아야함 */
+			z-index : 998;
+
+			/* 투명도 조절 실시 */
+			opacity : 0.5;
+
+			/* display 설정 : 표시 여부 */
+			display : none;
+
+            /*popup1에서  ok 누르면 원래 페이지 화면이 껌해지고 아무것도 안눌러지는 걸 해결 */
+            visibility: hidden;
+
+            /* 팝업창 뜨면 뒤에 작동 안하게 */
+            pointer-events: none;
+
+		}
+        
+        
+		/* 버튼 div 스타일 지정 */
+		#btn_container {
+			width : 30%;
+			height : 20%;
+			margin : 0 auto;
+			padding : 0;
+			border : none;
+			background-color : #0a1a2e;
+					
+			/* 컨테이너 배치 정렬 실시 */
+			float : top;
+			position : relative; 
+			top : 10%;
+			left : 0%;
+			
+			/* 마우스 커서 스타일 */
+			cursor : pointer;
+			
+			/* div 테두리 원형 설정 */
+			border-radius : 20px; 
+			
+			/* display 설정 : p 태그 수직 정렬 */
+			display : table; 
+			
+			/* p 태그 텍스트 내용 길면 숨김 처리 하기 위함 */
+			table-layout: fixed;												   
+		}
+		
+		
+		/* 버튼 p 텍스트 스타일 지정 */
+		#btn_txt {
+			/* 텍스트 수평 정렬 지정 */
+			text-align : center;
+			
+			/* 텍스트 색상 지정 */
+			color : #ffffff;
+			
+			/* 텍스트 굵기 지정 */
+			font-weight : bold;
+			
+			/* 텍스트 사이즈 지정 */        	
+			font-size : 3vw;
+        	
+			/* 텍스트 수직 정렬 실시 */        	        	 	
+			display : table-cell;
+			vertical-align : middle;
+			
+			/* p 태그 텍스트 내용 길면 숨김 처리*/
+			overflow : hidden;
+			text-overflow : ellipsis;
+			white-space : nowrap;																			  								   
+		}
+
+        #popup_container {
+            width : 400px;
+            margin : 0 auto;
+            padding : 0;
+            border : none;
+
+            /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+            background : #262B49;
+
+            /* 마우스 커서 스타일 */
+            cursor : pointer;
+
+            /* div 테두리 원형 설정 */
+            border-radius : 10px; 
+
+            /* display 설정 : 표시여부 */
+            display: none;
+
+            /* z-index 우선 순위 설정 */
+            z-index:9999; 
+
+            /* 팝업창 가운데 정렬을 위한 속성들 */ 
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            /* 마우스 커서 스타일 */
+            cursor : default;  
+
+            /* 팝업창 뜨면 뒤에 작동 안하게 */
+            pointer-events: auto;
+
+        }
+
+        .up_text {
+            color: white;
+            padding: 10px;
+            font-family: Arial;
+            font-size: 25px;
+            font-weight:500;
+            margin-left: 10px;
+        }
+
+        #separator {
+            width: 95%;
+            border: none;
+            border-top: 1px solid white; /* 얇은 선 */
+        }
+
+        .down_text {
+            width:90%;
+            color: white;
+            padding: 10px;
+            font-family: Arial;
+            font-size: 15px;
+            font-weight:500;
+            margin-left: 10px;
+        }
+
+        #close_button {
+        position:absolute; 
+        bottom:10px; 
+        right:10px; 
+
+        width: 110px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 550;
+        line-height: normal;
+        
+        border: 1px solid #00F9FF;
+        border-color: #00F9FF;
+        background-color: #1B1F38;
+        color: #00F9FF;
+        
+        /* 마우스 커서 스타일 */
+        cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
+        }
+
+        #back_button {
+        position:absolute; 
+        bottom:10px; 
+        right:135px; 
+
+        width: 110px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 550;
+        line-height: normal;
+        
+        border: 1px solid #fff;
+        border-color: white;
+        background-color: #1B1F38;
+        color: white;
+        
+        /* 마우스 커서 스타일 */
+        cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
+        }
+
+        #continue_button {
+        position:absolute; 
+        bottom:10px; 
+        right:10px; 
+
+        width: 120px;
+        height: 40px;
+        border-radius: 5px;
+
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 550;;
+        line-height: normal;
+        
+        border: 1px solid #00F9FF;
+        border-color: #00F9FF;
+        background-color: #1B1F38;
+        color: #00F9FF;
+        
+        /* 마우스 커서 스타일 */
+        cursor : pointer;  /* 버튼 위에서만 포인터 모양으로 변경*/
+        }
+
+
+        #popup_container2 {
+            width : 400px;
+            margin : 0 auto;
+            padding : 0;
+            border : none;
+
+            /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+            background : #262B49;
+
+            /* 마우스 커서 스타일 */
+            cursor : pointer;
+
+            /* div 테두리 원형 설정 */
+            border-radius : 10px; 
+
+            /* display 설정 : 표시여부 */
+            display: none;
+
+            /* z-index 우선 순위 설정 */
+            z-index:9999; 
+
+            /* 팝업창 가운데 정렬을 위한 속성들 */ 
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            /* 마우스 커서 스타일 */
+            cursor : default;  
+
+            /* 팝업창 뜨면 뒤에 작동 안하게 */
+            pointer-events: auto;
+
+        }
+
+        #popup_container3 {
+            width : 400px;
+            margin : 0 auto;
+            padding : 0;
+            border : none;
+
+            /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+            background : #262B49;
+
+            /* 마우스 커서 스타일 */
+            cursor : pointer;
+
+            /* div 테두리 원형 설정 */
+            border-radius : 10px; 
+
+            /* display 설정 : 표시여부 */
+            display: none;
+
+            /* z-index 우선 순위 설정 */
+            z-index:9999; 
+
+            /* 팝업창 가운데 정렬을 위한 속성들 */ 
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            /* 마우스 커서 스타일 */
+            cursor : default;  
+
+            /* 팝업창 뜨면 뒤에 작동 안하게 */
+            pointer-events: auto;
+
+        }
+
+        #popup_container4 {
+        width : 400px;
+        margin : 0 auto;
+        padding : 0;
+        border : none;
+
+        /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+        background : #262B49;
+
+        /* 마우스 커서 스타일 */
+        cursor : pointer;
+
+        /* div 테두리 원형 설정 */
+        border-radius : 10px; 
+
+        /* display 설정 : 표시여부 */
+        display: none;
+
+        /* z-index 우선 순위 설정 */
+        z-index:9999; 
+
+        /* 팝업창 가운데 정렬을 위한 속성들 */ 
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        /* 마우스 커서 스타일 */
+        cursor : default;  
+
+        }
+
+        #popup_container5 {
+        width : 400px;
+        margin : 0 auto;
+        padding : 0;
+        border : none;
+
+        /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+        background : #262B49;
+
+        /* 마우스 커서 스타일 */
+        cursor : pointer;
+
+        /* div 테두리 원형 설정 */
+        border-radius : 10px; 
+
+        /* display 설정 : 표시여부 */
+        display: none;
+
+        /* z-index 우선 순위 설정 */
+        z-index:9999; 
+
+        /* 팝업창 가운데 정렬을 위한 속성들 */ 
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        /* 마우스 커서 스타일 */
+        cursor : default;  
+
+        }
+
+        #popup_container6 {
+        width : 400px;
+        margin : 0 auto;
+        padding : 0;
+        border : none;
+
+        /* 그라데이션 : 왼쪽 위 > 오른쪽 아래 */
+        background : #262B49;
+
+        /* 마우스 커서 스타일 */
+        cursor : pointer;
+
+        /* div 테두리 원형 설정 */
+        border-radius : 10px; 
+
+        /* display 설정 : 표시여부 */
+        display: none;
+
+        /* z-index 우선 순위 설정 */
+        z-index:9999; 
+
+        /* 팝업창 가운데 정렬을 위한 속성들 */ 
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        /* 마우스 커서 스타일 */
+        cursor : default;  
+
+        }
+
+
+        </style>
+
+</head>
+
+<body>
+    <!-- body 영역 전체 덮는 레이아웃 -->
+    <div id="body_full"></div>
+    
+    
+    <!-- 팝업창 레이아웃 팝업 후 ok 누르면 팝업창  닫히는 그리고 페이지 리로드 -->
+    <div id="popup_container">
+        <br>
+        <div class="up_text" id="up_text"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="location.reload()">OK</button>
+    </div>
+
+    <!-- 팝업창 레이아웃- 팝업 후 login.html로 이동 -->
+    <div id="popup_container2">
+        <br>
+        <div class="up_text" id="up_text2"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text2"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="window.location.href = 'server.html'">OK</button>
+    </div>
+
+    <!-- 팝업창 레이아웃 - 팝업 후 ok 누르면 닫힘 --> 
+    <div id="popup_container3">
+        <br>
+        <div class="up_text" id="up_text3"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text3"></div>
+        <br>
+        <br><br><br>
+        <button id="back_button" onclick="window.location.href = 'server.html';">BACK</button>
+        <button id="continue_button" onclick="toggle3(); closePopup();">CONTINUE</button>
+    </div>
+
+    <!-- 닫기 누르면 그냥 닫힘 -->
+    <div id="popup_container4">
+        <br>
+        <div class="up_text" id="up_text4"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text4"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="closePopup1()">OK</button>
+    </div>
+
+    <!-- time out -->
+    <div id="popup_container5">
+        <br>
+        <div class="up_text" id="up_text5"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text5"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="closePopup2()">OK</button>
+    </div>
+
+    <!--nickname 중복 -->
+    <div id="popup_container6">
+        <br>
+        <div class="up_text" id="up_text6"></div>
+        <hr id="separator" />
+        <div class="down_text" id="down_text6"></div>
+        <br>
+        <br><br><br>
+        <button id="close_button" onclick="closePopup3()">OK</button>
+    </div>
+    
+
+    <div class="top"><br><br><br><br><br><br><br><br></div>
+    <div class="center">
+        <div class="h1_container">
+            <span style="line-height:30%"><h1>Sign Up</h1></span>
+            <br>
+        </div>
+
+        <div class="h3_container">
+            <span style="line-height:10%" id="h3_1"><h3>Enter email address for verification.</h3></span>
+        </div>
+        
+        <div class="h3_container">
+            <span id="h3_2" style="display:none">
+                <h3>Check if below information is correct.
+                    <br>For incorrect information, please contact support after singup.
+                </h3>
+            </span>
+        </div>
+
+        <div class="h3_container">
+            <span id="h3_3" style="display:none">
+                <h3>Enter password and nickname.
+                </h3>
+            </span>
+        </div>
+
+
+        <div class="boxcontainer">
+            <div class="form_container1" id="post_email">
+                <form name="postemail" id="postemail" >
+                    <div class="email">
+                        <br>
+                        <b class="text">Email</b>
+                        <br>
+                        <div class="inputs">
+                            <input class="input_text" type="email" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+
+                            <span style="line-height:50%"><br></span>
+                            <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                            <div class="errors" id="emailerror" style="color: red;"></div>
+                            <br>
+                            <div class="buttons">
+                                <button class="button" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+
+            <div class="form_container" id="token_check" style="display:none">
+                <form name="tokencheck" id="tokencheck">
+                    <!-- toggle div -->
+                    <div class="container2" id="inputDiv">
+                    
+                    <br>
+                    <div class="token_box">
+                        <input class="input_text" type="text" placeholder="Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='Verification Code'" name="token" id="token">
+                    <!-- </div> -->
+                        &nbsp;
+                    
+                    <!-- <div class="timers"> -->
+                        <span class="timer" id="timer" style="color:red;"></span> 
+                        <!-- timer -->
+
+                    </div>
+                    <br><br>
+                    <div class="buttons2">
+                        <button class="button resend" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button> 
+                        <button class="button confirm" type="submit" id="tokenconfirm" onclick="confirmToken(event)" disabled>Confirm</button>
+                    </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="form_container" id="infor_mation">
+                <form name="information" id="inform">
+                    <div class="container3" id="preinformation" style="display:none">
+                        <b class="text">Name</b>
+                        <br>
+                        <input class="input_text" type="text" name="name" id="name" disabled>&nbsp;
+                        <br>
+                        <Br>
+                        <b class="text">Group</b>
+                        <br>
+                        <input class="input_text" type="text" name="group" id="group" disabled>&nbsp;
+                        <br>
+                        <br>
+                        <b class="text">Team</b>
+                        <br>
+                        <input class="input_text" type="text" name="team" id="team" disabled>&nbsp;
+                        <br>
+                        <br>
+                        <button class="button" type="button" id="information" onclick="informcontinue()" >Continue</button>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="form_container" id="real_inform">
+                <form name="realinform" onsubmit="submitForm(event,'/realsignup')" id="realinform">
+                    <div class="container4" id="realinformation" style="display:none">
+                        <b class="text">Password</b>
+                        <br>
+                        <input class="input_text" type="password" name="password" id="password" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'" oninput='signupbutton()'>&nbsp;
+                        
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="passcheck" style="color: red;"></div>
+                        <br>
+
+                        <input class="input_text" type="password" name="password2" id="password2" placeholder="Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='Verify Password'" oninput='signupbutton()'>&nbsp;
+                        <br>
+
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="passverify"></div>
+
+                        <br>
+                        <b class="text">Nickname</b>
+                        <br>
+                        <input class="input_text" type="text" name="nickname" id="nickname" placeholder="Nickname" onfocus="this.placeholder=''" onblur="this.placeholder='Nickname'" oninput='signupbutton()'>&nbsp;
+                        
+                        <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                        <div class="errors" id="nickcheck" style="color: red;"> </div>
+                        <Br>
+                        <br>
+                        <button class="button" type="submit" id="signup"  disabled>Sign Up</button>
+                
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <div class="copyright">
+        <p>© Copyright 2023. All Rights Reserved.</p>
+    </div>
+    
+
+    
+    
+    
+    
+
+    <script>
+        const pass1 = document.getElementById('password');
+        pass1.addEventListener('input', passform);
+
+        const pass2 = document.getElementById('password2');
+        pass2.addEventListener('input',passverifing)
+
+        const nick=document.getElementById('nickname')
+        nick.addEventListener('input',nickcheck)
+
+        function passform() {
+            const pass1 = document.getElementById('password');
+            pw = pass1.value.replace(/ /gi, "")
+
+            const divpass = document.getElementById('passcheck')
+
+            var SC = "{}[]/?.,;:|)*~`!^-+<>@#$%&=(";
+            var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            var num = "0123456789"
+            var check_SC = 0;
+            var check_str = 0;
+            var check_num = 0;
+
+            function check_pw() {
+                check_SC = 0;
+                check_str = 0;
+                check_num = 0;
+
+                for (var i = 0; i < SC.length; i++) {
+                    if (pw.indexOf(SC[i]) != -1) {
+                        check_SC = 1;
+                        break
+                    }
+                }
+                for (var i = 0; i < str.length; i++) {
+                    if (pw.indexOf(str[i]) != -1) {
+                        check_str = 1;
+                        break
+                    }
+                }
+                for (var i = 0; i < num.length; i++) {
+                    if (pw.indexOf(num[i]) != -1) {
+                        check_num = 1;
+                        break
+                    }
+                }
+                if (pw.length < 8 || pw.length > 16) {
+                    divpass.innerHTML = 'Password must be 8-16 characters long';
+                    nosignupbutton()
+                } else if (check_SC == 0 || check_str == 0 || check_num == 0) {
+                    divpass.innerHTML = 'Password must contain letters, numbers, and special characters(\',\",_,￦,space excluded).';
+                    nosignupbutton()
+                } else {
+                    divpass.innerHTML = ''
+                    // 버튼 상태 업데이트
+                    signupbutton();
+                }
+
+
+            }
+            check_pw()
+        }
+
+        function passverifing() {
+            var pass1 = document.getElementById('password').value;
+            var pass2 = document.getElementById('password2').value;
+
+            pw1 = pass1.replace(/ /gi, "")
+            pw2 = pass2.replace(/ /gi, "")
+
+            const divpass = document.getElementById('passverify')
+
+                if (pw1== pw2) {
+                    divpass.innerHTML = ''
+                    // 버튼 상태 업데이트
+                    signupbutton();
+                }
+                else {
+                    divpass.innerHTML = 'Passwords do not match';
+                    divpass.style.color = 'red';
+                    nosignupbutton()
+                }
+        }
+
+        function nickcheck() {
+            var nicknam = document.getElementById('nickname').value;
+
+            var nickmix = nicknam.replace(/ /gi, "")
+            var nick=nickmix.toUpperCase()
+
+            var SC = "_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            
+            var check_SC = 0;
+            
+            function check_nick() {
+                check_SC = 0;
+
+                const divpass = document.getElementById('nickcheck')
+                
+
+                for (var i = 0; i < SC.length; i++) {
+                    if (nick.indexOf(SC[i]) != -1) {
+                        check_SC = 1;
+                        break
+                    }
+                }
+
+                var containsSpecialChar = /[^A-Z0-9_]/.test(nick);
+
+                if (nick.length < 2 || nick.length > 12) {
+                    divpass.innerHTML = 'Nickname must be 2-12 characters long';
+                    nosignupbutton()
+                } else if (check_SC == 0) {
+                    divpass.innerHTML = 'Nickname must only contain letters, numbers, and underscore';
+                    nosignupbutton()
+                } else if (containsSpecialChar){
+                    divpass.innerHTML = 'Nickname must only contain letters, numbers, and underscore';
+                    nosignupbutton()
+                }else {
+                    divpass.innerHTML = ''
+                    // 버튼 상태 업데이트
+                    signupbutton();
+                }
+
+                
+
+            }
+            check_nick()
+        }
+
+        //preuser continue 버튼 이후, notpreuser confirm 이후
+        async function toggle3() {
+            const Div1 = document.getElementById('inputDiv');
+            const Div2 = document.getElementById('preinformation');
+            const Div3 = document.getElementById('realinformation');
+            const span1 = document.getElementById('h3_1')
+            const span2 = document.getElementById('h3_2')
+            const span3 = document.getElementById('h3_3')
+
+            // const passbox = document.getElementById('password');
+            // const pass2wbox = document.getElementById('password2');
+            // const nickbox = document.getElementById('nickname');
+
+            if (Div3.style.display == "none") {
+                Div3.style.display = "block";
+                Div2.style.display = "none";
+                Div1.style.display = "none";
+                span1.style.display = "none";
+                span2.style.display = "none";
+                span3.style.display = "block"
+
+            } else {
+                Div3.style.display = "none";
+            }
+
+        }
+
+        // 토큰 미일치 팝업 ok누르면 닫기-> conirm버튼다시 활성화.
+        function closePopup() {
+            var popup = document.getElementById('popup_container3');
+            popup.style.display = "none";
+        }
+
+        // 토큰 미일치 팝업 ok누르면 닫기-> conirm버튼다시 활성화.
+        function closePopup1() {
+            var popup = document.getElementById('popup_container4');
+            const tokenConfirmButton = document.getElementById('tokenconfirm');
+            popup.style.display = "none";
+            tokenConfirmButton.disabled = false;
+        }
+
+        function closePopup2() {
+            var popup = document.getElementById('popup_container5');
+            const tokenResendButton = document.getElementById('tokenresend');
+            popup.style.display = "none";
+            tokenResendButton.disabled = false;
+        }
+
+        function closePopup3() {
+            var popup = document.getElementById('popup_container6');
+            const signupButton = document.getElementById('signup');
+            popup.style.display = "none";
+            signupButton.disabled=false;
+
+        }
+        
+        // 버튼 상태 없데이트
+        function signupbutton() {
+            const pass1 = document.getElementById('password').value;
+            const pass2 = document.getElementById('password2').value;
+            const nick = document.getElementById('nickname').value;
+            const signupButton = document.getElementById('signup');
+
+            if (pass1.length >= 8 && pass1.length <= 16 && pass1 === pass2 && nick.length >= 2 && nick.length <= 12) {
+                signupButton.disabled = false; // 조건을 만족할 때 버튼 활성화
+                signupButton.style.borderColor = '#00F9FF'; // 버튼 테두리 색상 변경
+                signupButton.style.color = '#00F9FF'; // 버튼 텍스트 색상 변경
+            } else {
+                signupButton.disabled = true; // 조건을 만족하지 않을 때 버튼 비활성화
+                signupButton.style.borderColor = ''; // 기본 테두리 색상으로 변경 (CSS 스타일 시트에 정의된 값 사용)
+                signupButton.style.color = ''; // 기본 텍스트 색상으로 변경 (CSS 스타일 시트에 정의된 값 사용)
+            }
+        }
+
+        function nosignupbutton() {
+            const signupButton = document.getElementById('signup');
+
+            signupButton.disabled = true; // 조건을 만족하지 않을 때 버튼 비활성화
+            signupButton.style.borderColor = ''; // 기본 테두리 색상으로 변경 (CSS 스타일 시트에 정의된 값 사용)
+            signupButton.style.color = ''; // 기본 텍스트 색상으로 변경 (CSS 스타일 시트에 정의된 값 사용)
+            }
+        
+    </script>
+</body>
+
+</html>

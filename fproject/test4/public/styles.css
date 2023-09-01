@@ -1,0 +1,296 @@
+body {
+    background: #1B1F38;
+    min-height: 100dvh;
+
+}
+
+.center {
+
+    width: 500px;
+    display: block;
+    /* 가로에서 가운데 위치 */
+    margin: auto;
+    /* 세로에서 가운데 */
+    margin-top: 15%;
+    text-align: center;
+
+}
+
+.h1_container {
+    width: 200px;
+
+    text-align: center;
+
+    margin:auto;
+
+    color: var(--theme-white, #FFF);
+
+    text-shadow: 0px 1px 15px #00F9FF;
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.h3_container {
+    width: 350px;
+
+    text-align: center;
+
+    margin: auto;
+
+    color: var(--theme-white, #FFF);
+    text-align: center;
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
+}
+
+/* form 모두를 감싸는 container */
+/* .boxcontainer {
+    top:100%;
+ 
+} */
+
+/* <b>  email 부분 태그 스타일 */
+b {
+    width:50px;
+    margin-left: 50px;
+
+
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    display: block;
+
+    margin-bottom: -5px;
+
+}
+
+.inputs input {
+    padding-left: 20px;
+    width:375px;
+    font-family: Arial;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+    display:block;
+    margin-left: 50px;
+
+    background-color: #262B49;
+    border:none;
+}
+
+::placeholder {
+    color: rgb(70, 70, 150);
+}
+
+/* verify 버튼 */
+.buttons button {
+    width:90px;
+    height:40px;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    cursor: pointer;
+
+    display: block;
+    margin-left:360px;
+
+    border-style: 1px solid #248183 ;
+    background-color: #1B1F38;
+    color: #248183;
+
+}
+
+.container2 input {
+    padding-left: 20px;
+    width: 375px;
+    font-family: Arial;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+
+    display: inline;
+
+    background-color: #262B49;
+    border:none;
+
+    margin-left: 40px;
+}
+
+.container3 input {
+    padding-left: 20px;
+    width: 375px;
+    font-family: Arial;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+/* 
+    display: inline; */
+
+    background-color: #262B49;
+    border: none;
+/* 
+    margin-left: 40px; */
+}
+
+.container4 input {
+    padding-left: 20px;
+    width: 375px;
+    font-family: Arial;
+    color: white;
+    height: 30px;
+    border-radius: 5px;
+    /* 
+    display: inline; */
+
+    background-color: #262B49;
+    border: none;
+    /* 
+    margin-left: 40px; */
+}
+
+/* input 자동완성 시 색 변경 금지*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #262B49 inset;
+    -webkit-text-fill-color: #fff;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.token_box {
+    display:inline;
+}
+
+.container span{
+    width:20px;
+    height:30px;
+    font-family: Arial;
+
+    display:inline;
+    font-weight: bold;
+}
+
+.errors {
+    text-align: left;
+    display: block;
+    margin-left: 50px;
+    margin-top:-10px;
+    font-family: Arial;
+
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
+    
+}
+
+.buttons2 {
+    display: inline;
+    padding-left: 210px;
+    
+}
+
+.buttons2 .button.confirm {
+    width: 90px;
+    height: 40px;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    cursor: pointer;
+
+    display: inline;
+
+    border-color: 1px solid #248183;
+    background-color: #1B1F38;
+    color: #248183;
+}
+
+.buttons2 .button.resend {
+    width: 90px;
+    height: 40px;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    cursor: pointer;
+
+    display: inline;
+
+    border-color: 1px solid rgb(166, 160, 160);
+    background-color: #1B1F38;
+    color:rgb(166, 160, 160);
+}
+
+.container3 button {
+    width: 110px;
+    height: 40px;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    cursor: pointer;
+
+    border-color: 1px solid #00F9FF;
+    background-color: #1B1F38;
+    color: #00F9FF;
+
+}
+
+.container4 button {
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    cursor: pointer;
+
+    border-color: 1px solid #248183;
+    background-color: #1B1F38;
+    color: #248183;
+}
+
+.container4 .errors {
+    text-align: left;
+    display: block;
+    margin-left: 50px;
+    margin-top:10px;
+    font-family: Arial;
+
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
+
+}

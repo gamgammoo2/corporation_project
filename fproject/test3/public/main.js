@@ -517,7 +517,7 @@ async function countdown() {
             }
         }
         element = document.getElementById('timer');
-        endTime = (+new Date) + 1000 * 10; // 600이 10분 5는 5초
+        endTime = (+new Date) + 1000 * 30; // 600이 10분 5는 5초
         updateTimer();
     
 }

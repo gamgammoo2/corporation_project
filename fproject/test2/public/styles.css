@@ -7,26 +7,41 @@ body {
 }
 
 /* 모든 폼 요소를 숨김 */
-form {
+/* form {
     display: none;
-}
+} */
 
 /* postmail 폼이 활성화될 때 해당 폼 요소만 보임 */
-#postmail {
+/* #postmail {
     display: block;
-}
+} */
 
 /* h1 스타일 */
-h1 {
-    color: var(--theme-white, #FFF);
-    text-align: center;
-    text-shadow: 0px 1px 15px #00F9FF;
+/* h1 {
+    color: var(--theme-white, #FFF); */
+    /* text-align: center; */
+    /* text-shadow: 0px 1px 15px #00F9FF;
     font-family: Arial;
     font-size: 40px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    height: 10vh
+} */
+
+.h1_container {
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    text-align: center;
+
+    color: var(--theme-white, #FFF);
+    /* text-align: center; */
+    text-shadow: 0px 1px 15px #00F9FF;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 /* h3 스타일 */
@@ -34,32 +49,55 @@ h3 {
     color: var(--theme-white, #FFF);
     text-align: center;
     font-family: Arial;
-    font-size: 20px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
+.h3_container {
+    width: 100%;
+    position: absolute;
+    top: 23%;
+    text-align: center;
+}
+
 
 /* <b> 태그 스타일 */
-b {
+.form_container b {
+    position:absolute;
+    left:30%;
+
     color: var(--theme-white, #FFF);
     font-family: Arial;
-    font-size: 20px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
     /* line-height: normal; */
     /* margin-right: 10px; */
-    /* text-align: normal */
+    /* text-align: normal; */
+    /* b 태그를 block 요소로 만들어 줍니다 */
+    display:block;
 }
 
-.input-container {
-        display: flex;
-        align-items: center;
-    }
+.input_container {
+    display: flex;
+    align-items: center;
+}
+
+/* .input_text{
+	background-color:#262B49;
+
+	color:white;
+
+} */
 
 /* inputbox 스타일 */
-form[name="postemail"] input.text {
+.form_container input {
+
+    position:absolute;
+    left:30%;
+
     font-family: Arial;
     color: white;
     width: 300px;
@@ -70,39 +108,101 @@ form[name="postemail"] input.text {
     align-items: center;
 }
 
-/* 버튼 스타일 */
-.button {
-    width: 80px;
-    height: 80px;
+.errors {
+    position:absolute;
+    left:30%;
+    top:150%;
+
+}
+
+/* 버튼 컨테이너 스타일 */
+.buttons {
+    position: absolute;
+    right: 30%;
+    top: 180%;
+}
+
+/* Confirm 버튼 스타일 */
+.button.confirm {
+    /* 버튼 크기를 조절합니다 */
+    width: 100px;
+    height: 40px;
     flex-shrink: 0;
     border-radius: 5px;
-    border: 2px solid var(--theme-point-color, #00F9FF);
-    background: var(--theme-background, #1B1F38);
-    color: var(--theme-point-color, #00F9FF);
+
     text-align: center;
     font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    cursor: pointer;
-    width: 123px;
+	font-size :20px; 
+	font-style:normal; 
+	font-weight:bold ;  
+	line-height:normal ;  
+	cursor:pointer ;  
+
+	border-color:#248183 ;   
+	background-color:#1B1F38 ;   
+	color:#248183 ;
 }
+
+/* Resend 버튼 스타일 */
+.button.resend {
+     /* 버튼 크기를 조절합니다 */
+     width : 100px; 
+     height :40px; 
+     flex-shrink :0; 
+     border-radius :5px; 
+
+     text-align:center; 
+     font-family:"Arial"; 
+     	font-size :20px; 
+     	font-style:normal;  
+     	font-weight:bold ;  
+     	line-height:normal ;  
+     	cursor:pointer ;  
+
+     	border-color:#248183 ;   
+     	background-color:#1B1F38 ;   
+     	color:#248183 ;
+}
+
+
+
+
+
+
+.timers span {
+    position:absolute;
+    right:30%;
+}
+
+/* .button:hover{
+	border-color:#00F9FF;
+
+	color:#00F9FF;
+} */
 
 /* form 태그 가운데 정렬 */
-form {
+/* form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
     /* height: 100vh; 화면 높이 기준으로 가운데 정렬 */
+    /* align-items를 flex-start로 설정하여 안쪽 항목들이 왼쪽정렬 되도록 */
+   /* align-items : flex-start; 
+} */
+
+.form_container {
+    width: 100%;
+    position: relative;
+    top : 30%;
+    /* align-items: flex; */
 }
 
-/* 활성화된 버튼 스타일 */
+/* 활성화된 버튼 스타일
 .button.active {
     width: 123px;
     height: 47px;
     flex-shrink: 0;
     border: 2px solid #00F9FF;
     color: #00F9FF;
-}
+} */

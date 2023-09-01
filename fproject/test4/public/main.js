@@ -115,8 +115,12 @@ function toggleButton() {
 
     if (emailInput.value.trim() !== '') {
         emailbut.disabled = false;
+        emailbut.style.border = "1px solid #00F9FF";
+        emailbut.style.color = "#00F9FF";
     } else {
-        emailbut.disabled = true;
+        emailbut.disabled = true
+        emailbut.style.border = "1px solid #248183";
+        emailbut.style.color = "#248183";
     }
 }
 
@@ -316,6 +320,25 @@ function call_popup3(up,down) {
     bodyFull();
 };
 
+/* 팝업창3 호출 이벤트 함수 정의 */
+function call_popup4(up, down) {
+    /* display 값 확인 */
+    var tagId = document.getElementById("popup_container4");
+    var display = window.getComputedStyle(tagId).display;
+
+    if (display == "none") {
+        document.getElementById('up_text').innerHTML = up;
+        document.getElementById('down_text').innerHTML = down;
+        tagId.style.display = "block";
+    }
+    else {
+        tagId.style.display = "none";
+    }
+
+    /* body 영역 투명도 표시 함수 호출 */
+    bodyFull();
+};
+
 
 // 폼 제출 함수 - verify email, token check,realsignup
 function submitForm(event, action) {
@@ -375,7 +398,6 @@ function submitForm(event, action) {
                     const data = JSON.parse(xhr.responseText);
                     console.log({'preuser_ok_xhr':data});
                     nocountdown()
-                    call_popup('Token Confirmed!','Please continue to sign up.') //이메일 완료
                     toggle2(data.username[0][0].name,data.usergroup[0][0].stgroup,data.userteam[0][0].team)
                     
                 } else if (xhr.status == 201) {
@@ -392,7 +414,7 @@ function submitForm(event, action) {
                 } else if (xhr.status == 409) {
                     const errorResponse = JSON.parse(xhr.responseText);
                     const errorMessage = errorResponse.error;
-                    call_popup('Warning!',errorMessage) //토큰 미일치
+                    call_popup4('Warning!',errorMessage) //토큰 미일치
                 } else {
                     console.error('Request failed with status:', xhr.status);
                 }
@@ -491,6 +513,13 @@ async function countdown() {
         // Confirm 버튼 활성화 여부를 체크하는 함수
         function checkConfirmButton() {
             tokenConfirmButton.disabled = tokenInput.value.length < 6;
+            if (tokenInput.value.length >5){
+                tokenConfirmButton.style.border = "1px solid #00F9FF";
+                tokenConfirmButton.style.color = "#00F9FF";
+            } else {
+                tokenConfirmButton.style.border = "1px solid #248183";
+                tokenConfirmButton.style.color = "#248183";
+            }
         }
         
         // Confirm 버튼 활성화 여부 감시
@@ -502,10 +531,14 @@ async function countdown() {
             if (tokenConfirmed== false && msLeft < 0) {
                 console.log('done');
                 // 10분안에 입력하지 않은 코드는 expired
-                call_popup('Warning','Time expired.')
+                call_popup4('Warning','Time expired.')
                 tokenResendButton.disabled = false;
                 tokenConfirmButton.disabled=true;
                 tokenInput.disabled=true;
+                tokenResendButton.style.border = "1px solid white";
+                tokenResendButton.style.color = "white";
+                tokenConfirmButton.style.border = "1px solid #248183";
+                tokenConfirmButton.style.color = "#248183";
 
             } else { //timeout 안됬을때,token 일치 안함 => 시간 계속 흐름
                 time = new Date(msLeft);
@@ -517,7 +550,7 @@ async function countdown() {
             }
         }
         element = document.getElementById('timer');
-        endTime = (+new Date) + 1000 * 10; // 600이 10분 5는 5초
+        endTime = (+new Date) + 1000 * 30; // 600이 10분 5는 5초
         updateTimer();
     
 }
@@ -544,6 +577,8 @@ async function nocountdown() { //confirm 되면 countdown이 멈추기 0:00 표�
 function resetCountdown(event) { //resend 버튼 누르면 실행되는 동작
     const tokenResendButton = document.getElementById('tokenresend');
     const tokenInput = document.getElementsByName('token')[0];
+    tokenResendButton.style.border = "1px solid rgb(166, 160, 160)"
+    tokenResendButton.style.color = "rgb(166, 160, 160)"
     tokenInput.disabled = false;
     tokenResendButton.disabled = true;
     countdown(); // countdown을 다시 시작함

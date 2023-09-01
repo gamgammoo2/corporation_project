@@ -305,7 +305,7 @@
         <span style="line-height:50%" id="h3_1"><h3>Enter email address for verification.</h3></span>
     </div>
     
-    <div class="h3_container"></div>
+    <div class="h3_container">
         <span id="h3_2" style="display:none">
             <h3>Check if below information is correct.
                 <br>For incorrect information, please contact support after singup.
@@ -321,19 +321,21 @@
     </div>
 
 
-    <div class="form_container" id="post_email">
+    <div class="form_container1" id="post_email">
         <form name="postemail" id="postemail" >
-            <b class="text">Email</b>
-            <br>
-            <div class="inputs">
-                <input class="input_text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
+            <div class="email">
+                <b class="text">Email</b>
+                <br>
+                <div class="inputs">
+                    <input class="input_text" type="email" placeholder="  Email" onfocus="this.placeholder=''" onblur="this.placeholder='  Email'" name="email" id="email" oninput="toggleButton()"> &nbsp;
 
-                <span style="line-height:50%"><br></span>
-                <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
-                <div class="errors" id="emailerror" style="color: red;"></div>
+                    <span style="line-height:50%"><br></span>
+                    <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
+                    <div class="errors" id="emailerror" style="color: red;"></div>
 
-                <div class="buttons">
-                    <button class="button" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
+                    <div class="buttons">
+                        <button class="button" type="subtmit" id="checkemail" onclick="verifyEmail(event)" disabled>Verify</button>
+                    </div>
                 </div>
             </div>
             
@@ -346,17 +348,18 @@
             <div class="container" id="inputDiv">
             
             <br>
-            <input class="input_text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token" id="token">&nbsp;
+            <div class="token_box">
+                <input class="input_text" type="text" placeholder="  Verification Code" onfocus="this.placeholder=''" onblur="this.placeholder='  Verification Code'" name="token" id="token">
+            </div>&nbsp;
             
             <div class="timers">
                 <span class="timer" id="timer" style="color:red;"></span> 
                 <!-- timer -->
 
-                <!-- <span style="line-height:50%"><br></span> -->
             </div>
-
+            <br>
             <div class="buttons">
-                <button class="button confirm" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button>
+                <button class="button confirm" type="button"  id="tokenresend" onclick="resetCountdown(event)" disabled>Resend</button> 
                 <button class="button resend" type="submit" id="tokenconfirm" onclick="confirmToken(event)" disabled>Confirm</button>
             </div>
 
@@ -371,13 +374,16 @@
                 <br>
                 <input class="input_text" type="text" name="name" id="name" disabled>&nbsp;
                 <br>
+                <Br>
                 <b class="text">Group</b>
                 <br>
                 <input class="input_text" type="text" name="group" id="group" disabled>&nbsp;
                 <br>
+                <br>
                 <b class="text">Team</b>
                 <br>
                 <input class="input_text" type="text" name="team" id="team" disabled>&nbsp;
+                <br>
                 <br>
                 <button class="button" type="button" id="information" onclick="informcontinue()" >Continue</button>
 
@@ -396,7 +402,7 @@
                 <div id="passcheck" style="color: red;"></div>
 
                 <input class="input_text" type="password" name="password2" id="password2" placeholder="  Verify Password" onfocus="this.placeholder=''" onblur="this.placeholder='  Verify Password'" oninput='signupbutton()'>&nbsp;
-                
+                <br>
                 <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
                 <div id="passverify"></div>
 
@@ -407,7 +413,7 @@
                 
                 <!-- 동적으로 에러를 보여줄 수 있도록 div 형식 -->
                 <div id="nickcheck" style="color: red;"> </div>
-
+                <Br>
                 <br>
                 <button class="button" type="submit" id="signup"  disabled>Sign Up</button>
         

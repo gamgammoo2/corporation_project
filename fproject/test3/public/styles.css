@@ -1,0 +1,196 @@
+body {
+    background-color: #1B1F38;
+    position: relative;
+}
+
+.h1_container {
+    width: 100%;
+    position: absolute;
+    top: 30%;
+    text-align: center;
+
+    color: var(--theme-white, #FFF);
+    /* text-align: center; */
+    text-shadow: 0px 1px 15px #00F9FF;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+/* h3 스타일 */
+h3 {
+    color: var(--theme-white, #FFF);
+    text-align: center;
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.h3_container {
+    width: 100%;
+    position: absolute;
+    top: 35%;
+    text-align: center;
+}
+
+/* <b> 태그 스타일 */
+.form_container b {
+    position:absolute;
+    left:normal;
+
+    color: var(--theme-white, #FFF);
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    /* line-height: normal; */
+    /* margin-right: 10px; */
+    /* text-align: normal; */
+    /* b 태그를 block 요소로 만들어 줍니다 */
+    display:block;
+}
+
+/* <b> 태그 스타일 */
+.form_container1 b {
+    position:absolute;
+    left:normal;
+
+    color: var(--theme-white, #FFF);
+    font-family: Arial;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    /* line-height: normal; */
+    /* margin-right: 10px; */
+    /* text-align: normal; */
+    /* b 태그를 block 요소로 만들어 줍니다 */
+    display:block;
+}
+
+/* inputbox 스타일 */
+.form_container input {
+
+    font-family: Arial;
+    color: white;
+    width: 350px;
+    height: 30px;
+    /* flex-shrink: 0; */
+    border-radius: 5px;
+    background-color:#262B49 ;
+    align-items: center;
+}
+
+/* inputbox 스타일 */
+.form_container1 input {
+
+    font-family: Arial;
+    color: white;
+    width: 350px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background-color:#262B49 ;
+    align-items: center;
+}
+
+.container {
+    position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    margin-left:25px;
+  }
+
+
+.token_box {
+    align-items: center;
+}
+
+
+.errors {
+    position:absolute;
+}
+
+
+/* 버튼 컨테이너 스타일 */
+.form_container1 button {
+    right:normal;
+    margin-top: 10px;
+    margin-left: 70px;
+}
+
+/* Confirm 버튼 스타일 */
+.button.confirm {
+    position:absolute;
+    right:normal;
+    margin-top: 25px;
+    margin-left: -40px;
+}
+
+/* Resend 버튼 스타일 */
+.button.resend {
+    right:normal;
+    margin-top: 20px;
+    margin-left: 70px;
+
+}
+
+.form_container1 {
+    width: 100%;
+  	position:absolute;
+  	display:flex;
+  	flex-direction: column;
+  	align-items:center;
+
+	/* 기타 스타일 적용 예시 (선택사항) */
+
+	text-align:center;
+    top: 43%;
+
+}
+
+.form_container {
+    width: 100%;
+  	position:absolute;
+  	display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* justify-content: center; */
+
+    text-align: center;
+    top: 52%;
+
+}
+
+/* 버튼 컨테이너 스타일 */
+.button {
+
+    /* 버튼 크기를 조절합니다 */
+    width: 100px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 5px;
+
+    text-align: center;
+    font-family: Arial;
+	font-size :20px; 
+	font-style:normal; 
+	font-weight:bold ;  
+	line-height:normal ;  
+	cursor:pointer ;
+    
+    position: absolute;
+    right:normal; 
+
+    border-color:#248183 ;   
+	background-color:#1B1F38 ;   
+	color:#248183 ;
+}
+
+
