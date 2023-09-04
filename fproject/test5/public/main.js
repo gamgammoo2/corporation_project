@@ -117,10 +117,24 @@ function toggleButton() {
         emailbut.disabled = false;
         emailbut.style.border = "1px solid #00F9FF";
         emailbut.style.color = "#00F9FF";
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.background = "#00F9FF";}, false);
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.border = "#00F9FF"; }, false);
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.color = "#1B1F38"; }, false);
+
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38";}, false)
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid #00F9FF"; }, false)
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.color = "#00F9FF"; }, false)
     } else {
         emailbut.disabled = true
         emailbut.style.border = "1px solid #248183";
         emailbut.style.color = "#248183";
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.background = "#1B1F38"; }, false);
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.border = "1px solid #248183"; }, false);
+        emailbut.addEventListener("mouseover", function (event) { event.target.style.color = "#248183"; }, false);
+
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38"; }, false)
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid #248183"; }, false)
+        emailbut.addEventListener("mouseout", function (event) { event.target.style.color = "#248183"; }, false)
     }
 }
 
@@ -568,9 +582,24 @@ async function countdown() {
             if (tokenInput.value.length >5){
                 tokenConfirmButton.style.border = "1px solid #00F9FF";
                 tokenConfirmButton.style.color = "#00F9FF";
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.background = "#00F9FF"; }, false);
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.border = "#00F9FF"; }, false);
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.color = "#1B1F38"; }, false);
+
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38"; }, false)
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid #00F9FF"; }, false)
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.color = "#00F9FF"; }, false)
             } else {
                 tokenConfirmButton.style.border = "1px solid #248183";
                 tokenConfirmButton.style.color = "#248183";
+
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.background = "#1B1F38"; }, false)
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.border = "1px solid #248183"; }, false)
+                tokenConfirmButton.addEventListener("mouseover", function (event) { event.target.style.color = "#248183"; }, false)
+
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38"; }, false)
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid #248183"; }, false)
+                tokenConfirmButton.addEventListener("mouseout", function (event) { event.target.style.color = "#248183"; }, false)
             }
         }
         
@@ -592,13 +621,29 @@ async function countdown() {
                 tokenConfirmButton.style.border = "1px solid #248183";
                 tokenConfirmButton.style.color = "#248183";
 
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.background = "white"; }, false);
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.border = "1px solid white"; }, false);
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.color = "#1B1F38"; }, false);
+
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38"; }, false)
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid rgb(166,160,160)"; }, false)
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.color = "rgb(166,160,160)"; }, false)
+
             } else { //timeout 안됬을때,token 일치 안함 => 시간 계속 흐름
                 time = new Date(msLeft);
                 hours = time.getUTCHours();
                 mins = time.getUTCMinutes();
                 element.innerHTML = (hours ? hours + ':' + ('0' + mins).slice(-2) : mins) + ':' + ('0' + time.getUTCSeconds()).slice(-2); 
 
-               timeout = setTimeout(updateTimer, time.getUTCMilliseconds());
+                timeout = setTimeout(updateTimer, time.getUTCMilliseconds());
+
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.background = "#1B1F38"; }, false);
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.border = "1px solid rgb(166,160,160)"; }, false);
+                tokenResendButton.addEventListener("mouseover", function (event) { event.target.style.color = "rgb(166,160,160)"; }, false);
+
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.background = "#1B1F38"; }, false)
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.border = "1px solid rgb(166,160,160)"; }, false)
+                tokenResendButton.addEventListener("mouseout", function (event) { event.target.style.color = "rgb(166,160,160)"; }, false)
             }
         }
         element = document.getElementById('timer');

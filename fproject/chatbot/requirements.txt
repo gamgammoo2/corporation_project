@@ -1,0 +1,5 @@
+pip install python-dotenv
+pip install openai
+pip install unstructured
+pip install langchain
+pip install "unstructured[pdf]"
