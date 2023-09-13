@@ -47,7 +47,7 @@ while True:
   if query in ['quit', 'q', 'exit']:
     sys.exit()
   result = chain({"question": query, "chat_history": chat_history})
-  print(result['answer'])
+  print('Answer:',result['answer'])
 
   chat_history.append((query, result['answer']))  
   query = None

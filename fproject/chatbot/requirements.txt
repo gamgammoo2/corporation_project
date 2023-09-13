@@ -1,5 +1,15 @@
+. venv/bin/activate 로 venv 가상환경에서 실행 했어야 했다.
+
 pip install python-dotenv
 pip install openai
 pip install unstructured
 pip install langchain
-pip install "unstructured[pdf]"
+pip install "unstructured[pdf]" -> 에러 발생 -> 공간이 부족하다고 함. -> df -h로 확인-> 루트 꽉참 -> ebs 늘림. -> 파티션 늘림(sudo growpart 볼륨 파티션번호) ->ext4 파일시스템 늘리기(sudo resize2fs 파티션)
+pip install chromadb
+pip install tokenizers
+pip install tiktoken
+
+
+//google 연결
+pip install --upgrade google-api-python-client
+pip3 install --upgrade oauth2client 
