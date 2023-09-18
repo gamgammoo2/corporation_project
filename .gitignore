@@ -11,3 +11,7 @@ CDDC2023-User-main
 **/venv
 **/constants.py
 **/**.pyc
+
+**/main.js
+./fproject/test5/public/main.js
+**/test5

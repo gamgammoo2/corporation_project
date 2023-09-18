@@ -18,7 +18,8 @@ const{ SendEmailCommand, SESClient } = require('@aws-sdk/client-ses');
 class EmailService {
     constructor() {
         this.sesClient = new SESClient({
-            region: 'ap-northeast-2', // AWS Region 서울로 설정
+            region: 'ap-northeast-2',
+             // AWS Region 서울로 설정
         });
     }
 
