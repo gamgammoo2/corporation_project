@@ -12,6 +12,5 @@ CDDC2023-User-main
 **/constants.py
 **/**.pyc
 
-**/main.js
-./fproject/test5/public/main.js
-**/test5
+
+/fproject/test5/public/main.js

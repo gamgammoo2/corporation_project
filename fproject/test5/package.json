@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.414.0",
+    "@aws-sdk/credential-provider-node": "^3.414.0",
+    "@aws-sdk/credential-providers": "^3.414.0",
+    "aws-sdk": "^2.1436.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.0",
+    "path": "^0.12.7",
+    "require": "^0.4.4"
+  }
+}
