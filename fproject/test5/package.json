@@ -3,7 +3,7 @@
     "@aws-sdk/client-ses": "^3.414.0",
     "@aws-sdk/credential-provider-node": "^3.414.0",
     "@aws-sdk/credential-providers": "^3.414.0",
-    "aws-sdk": "^2.1436.0",
+    "aws-sdk": "^2.1467.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
